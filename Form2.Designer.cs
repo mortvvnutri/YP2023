@@ -52,9 +52,9 @@
             this.Z_priem_date = new System.Windows.Forms.Label();
             this.Vkladki = new System.Windows.Forms.TabControl();
             this.Sved_page = new System.Windows.Forms.TabPage();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
             this.textBox3 = new System.Windows.Forms.TextBox();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.Vkladki.SuspendLayout();
             this.Sved_page.SuspendLayout();
             this.SuspendLayout();
@@ -310,14 +310,12 @@
             this.Sved_page.Text = "Общие сведения";
             this.Sved_page.UseVisualStyleBackColor = true;
             // 
-            // button1
+            // textBox3
             // 
-            this.button1.Location = new System.Drawing.Point(163, 593);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(130, 40);
-            this.button1.TabIndex = 33;
-            this.button1.Text = "Выход";
-            this.button1.UseVisualStyleBackColor = true;
+            this.textBox3.Location = new System.Drawing.Point(344, 340);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(200, 29);
+            this.textBox3.TabIndex = 35;
             // 
             // button2
             // 
@@ -327,13 +325,16 @@
             this.button2.TabIndex = 34;
             this.button2.Text = "Клац";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
-            // textBox3
+            // button1
             // 
-            this.textBox3.Location = new System.Drawing.Point(344, 340);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(200, 29);
-            this.textBox3.TabIndex = 35;
+            this.button1.Location = new System.Drawing.Point(163, 593);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(130, 40);
+            this.button1.TabIndex = 33;
+            this.button1.Text = "Выход";
+            this.button1.UseVisualStyleBackColor = true;
             // 
             // Form2
             // 

@@ -4,10 +4,6 @@ using System.Net.Mail;
 using System.Net;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using System.Text;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolBar;
-using System.ComponentModel;
 
 namespace YP2023
 {
