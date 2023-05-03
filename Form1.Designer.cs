@@ -162,6 +162,7 @@
             this.emailTextBox.Name = "emailTextBox";
             this.emailTextBox.Size = new System.Drawing.Size(181, 29);
             this.emailTextBox.TabIndex = 17;
+            this.emailTextBox.Text = "luyba595@gmail.com";
             this.emailTextBox.TextChanged += new System.EventHandler(this.emailTextBox_TextChanged);
             // 
             // maskedTextBox1
@@ -172,6 +173,7 @@
             this.maskedTextBox1.RejectInputOnFirstFailure = true;
             this.maskedTextBox1.Size = new System.Drawing.Size(181, 29);
             this.maskedTextBox1.TabIndex = 16;
+            this.maskedTextBox1.Text = "9001242454";
             this.maskedTextBox1.TextChanged += new System.EventHandler(this.maskedTextBox1_TextChanged);
             this.maskedTextBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.maskedTextBox1_MouseMove);
             // 
@@ -222,6 +224,7 @@
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(181, 29);
             this.textBox3.TabIndex = 10;
+            this.textBox3.Text = "12345";
             // 
             // textBox4
             // 
@@ -230,6 +233,7 @@
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(181, 29);
             this.textBox4.TabIndex = 9;
+            this.textBox4.Text = "12345";
             // 
             // Form1
             // 
