@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using System.Data;
+using static YP2023.Form3;
 
 namespace YP2023
 {
