@@ -7,41 +7,14 @@ using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using System.Data;
 using static YP2023.Form3;
+using System.Xml.Linq;
+using System.Data.SqlClient;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace YP2023
 {
     public partial class Form1 : Form
     {
-        private bool IsUser
-        {
-            get
-            {
-                bool been = false;
-
-                string loginUser = textBox4.Text;
-
-                DB _databaseManager = new DB();
-                DataTable _dataTable = new DataTable();
-                MySqlDataAdapter _mySqlDataAdapter = new MySqlDataAdapter();
-                MySqlCommand _mySqlCommand = new MySqlCommand("SELECT * FROM Avt WHERE login = @UserLogin AND name = @UserName AND surname = @UserSurname", _databaseManager.GetConnection);
-
-                _mySqlCommand.Parameters.Add("@UserLogin", MySqlDbType.VarChar).Value = loginUser;
-
-                _mySqlDataAdapter.SelectCommand = _mySqlCommand;
-                _mySqlDataAdapter.Fill(_dataTable);
-
-                if (_dataTable.Rows.Count > 0)
-                {
-                    been = true;
-                    if (MessageBox.Show("Такой пользователь уже есть!\nПерейти на форму входа?", "Внимание", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                    {
-                        TabControl1.SelectedTab = TabControl1.TabPages[0];
-                    }
-                }
-
-                return been;
-            }
-        }
         private bool IsLogin
         {
             get
@@ -77,6 +50,7 @@ namespace YP2023
         public string UserPhone;
         public string UserPassword;
         public string UserEmail;
+        public string namelogin;
         public Form1()
         {
             InitializeComponent();
@@ -102,6 +76,7 @@ namespace YP2023
         private void Button1_Click(object sender, EventArgs e)
         {
             string loginUser = TextBox1.Text;
+            namelogin = loginUser;
             string passwordUser = TextBox2.Text;
 
             DB _databaseManager = new DB();
@@ -123,6 +98,7 @@ namespace YP2023
                 if (_dataTable.Rows.Count > 0)
                 {
                     Form2 form = new Form2();
+                    form.namelogin = namelogin;
                     this.Hide();
                     form.Show();
 
@@ -153,6 +129,7 @@ namespace YP2023
 
         private void button2_Click(object sender, EventArgs e)
         {
+
             // Генерируем код аутентификации
             string authCode = GenerateAuthCode();
             savedAuthCode = authCode;
@@ -161,50 +138,84 @@ namespace YP2023
             UserName = textBox4.Text;
             UserPhone = maskedTextBox1.Text;
             UserPassword = textBox3.Text;
+            
+            
+            DB _databaseManager = new DB();
+            DataTable _dataTable = new DataTable();
+            MySqlDataAdapter _mySqlDataAdapter = new MySqlDataAdapter();
+            // Подготовка запроса на выборку
+            string selectQuery = "SELECT login FROM avt;"; ;
+            MySqlCommand myCommand = new MySqlCommand(selectQuery, _databaseManager.GetConnection);
+            myCommand.Parameters.AddWithValue("@UserLogin", namelogin);
 
-            string senderEmail = "TestYP.NET@yandex.ru";
-            string senderPassword = "mhkmzjmdldjmyats";
+            // Открытие соединения с базой данных
+            _databaseManager.OpenConnection();
 
-            // адрес электронной почты получателя
-            string receiverEmail = toEmail;
-
-            // создание объекта сообщения
-            MailMessage message = new MailMessage();
-            message.From = new MailAddress(senderEmail);
-            message.To.Add(new MailAddress(receiverEmail));
-            message.Subject = "Авторизация";
-            message.Body = "Ваш код для сбора всей информации о вашей жизни: " + authCode;
-
-            // создание SMTP-клиента
-            SmtpClient client = new SmtpClient("smtp.yandex.ru", 587);
-            client.EnableSsl = true;
-            client.Timeout = 10000;
-            client.DeliveryMethod = SmtpDeliveryMethod.Network;
-            client.UseDefaultCredentials = false;
-            client.Credentials = new NetworkCredential(senderEmail, senderPassword);
-
-            // отправка сообщения
-            try
+            // Выполнение запроса на выборку
+            MySqlDataReader reader = myCommand.ExecuteReader();
+            if (reader.HasRows)
             {
-                client.Send(message);
-                Console.WriteLine("Сообщение отправлено");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Ошибка отправки сообщения: " + ex.Message);
-            }
+                reader.Read(); // Переход на первую строку результата
 
-            MessageBox.Show("Сообщение отправлено успешно)))");
+                // Заполнение значениями из поля phone
+                if (reader["login"].ToString() != UserName && reader["number"].ToString() != UserPhone && reader["email"].ToString() != UserEmail)
+                {
+                    string senderEmail = "TestYP.NET@yandex.ru";
+                    string senderPassword = "mhkmzjmdldjmyats";
 
-            // Сохраняем код аутентификации для последующей проверки
-            savedAuthCode = authCode;
-            Form3 form3 = new Form3();
-            form3.Code = savedAuthCode; // передаем сохраненный код в форму
-            form3.Name = UserName;
-            form3.Password = UserPassword;
-            form3.Phone= UserPhone;
-            form3.Email = UserEmail;
-            form3.ShowDialog();
+                    // адрес электронной почты получателя
+                    string receiverEmail = toEmail;
+
+                    // создание объекта сообщения
+                    MailMessage message = new MailMessage();
+                    message.From = new MailAddress(senderEmail);
+                    message.To.Add(new MailAddress(receiverEmail));
+                    message.Subject = "Авторизация";
+                    message.Body = "Ваш код для сбора всей информации о вашей жизни: " + authCode;
+
+                    // создание SMTP-клиента
+                    SmtpClient client = new SmtpClient("smtp.yandex.ru", 587);
+                    client.EnableSsl = true;
+                    client.Timeout = 10000;
+                    client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                    client.UseDefaultCredentials = false;
+                    client.Credentials = new NetworkCredential(senderEmail, senderPassword);
+
+                    // отправка сообщения
+                    try
+                    {
+                        client.Send(message);
+                        Console.WriteLine("Сообщение отправлено");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Ошибка отправки сообщения: " + ex.Message);
+                    }
+
+                    MessageBox.Show("Сообщение отправлено успешно)))");
+
+                    // Сохраняем код аутентификации для последующей проверки
+                    savedAuthCode = authCode;
+                    Form3 form3 = new Form3();
+                    form3.Code = savedAuthCode; // передаем сохраненный код в форму
+                    form3.Name = UserName;
+                    form3.Password = UserPassword;
+                    form3.Phone = UserPhone;
+                    form3.Email = UserEmail;
+                    this.Close();
+                    form3.ShowDialog();
+                }
+                else
+                {
+                    if (MessageBox.Show("Такой пользователь уже есть!\nПерейти на форму входа?", "Внимание", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
+                        TabControl1.SelectedTab = TabControl1.TabPages[0];
+                    }
+                }
+            }
+            reader.Close();
+            _databaseManager.CloseConnection();
+           
         }
 
         private bool IsValid(string text)
