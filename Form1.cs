@@ -144,7 +144,7 @@ namespace YP2023
             DataTable _dataTable = new DataTable();
             MySqlDataAdapter _mySqlDataAdapter = new MySqlDataAdapter();
             // Подготовка запроса на выборку
-            string selectQuery = "SELECT login FROM avt;"; ;
+            string selectQuery = "SELECT login, number, email FROM avt;"; ;
             MySqlCommand myCommand = new MySqlCommand(selectQuery, _databaseManager.GetConnection);
             myCommand.Parameters.AddWithValue("@UserLogin", namelogin);
 

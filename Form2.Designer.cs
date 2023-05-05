@@ -142,6 +142,7 @@
             // V_w
             // 
             this.V_w.AutoSize = true;
+            this.V_w.Checked = true;
             this.V_w.Location = new System.Drawing.Point(360, 293);
             this.V_w.Name = "V_w";
             this.V_w.Size = new System.Drawing.Size(44, 28);
@@ -320,7 +321,6 @@
             this.Vkladki.SelectedIndex = 0;
             this.Vkladki.Size = new System.Drawing.Size(738, 695);
             this.Vkladki.TabIndex = 1;
-            this.Vkladki.Click += new System.EventHandler(this.Vkladki_Click);
             // 
             // Sved_page
             // 
@@ -361,6 +361,7 @@
             // textBox3
             // 
             this.textBox3.Location = new System.Drawing.Point(344, 340);
+            this.textBox3.MaxLength = 8;
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(200, 29);
             this.textBox3.TabIndex = 35;
