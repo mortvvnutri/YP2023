@@ -22,7 +22,7 @@ namespace YP2023
         {
            
             if (V_w.Checked) { p = "ж"; }
-            if (V_w.Checked) { p = "м"; }
+            if (V_M.Checked) { p = "м"; }
             if (MessageBox.Show("Вы уверены что все данные верны?\n Сохранить их?", "Внимание", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 DB _databaseManager = new DB();
