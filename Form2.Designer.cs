@@ -393,6 +393,7 @@
             this.Controls.Add(this.Vkladki);
             this.Name = "Form2";
             this.Text = "Главная";
+            this.Shown += new System.EventHandler(this.Form2_Shown);
             this.Kont_page.ResumeLayout(false);
             this.Kont_page.PerformLayout();
             this.Vkladki.ResumeLayout(false);
