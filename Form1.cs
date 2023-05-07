@@ -54,6 +54,10 @@ namespace YP2023
         public Form1()
         {
             InitializeComponent();
+            TextBox2.UseSystemPasswordChar = true;
+            pictureBox1.Image = Properties.Resources.eye_close;
+            textBox3.UseSystemPasswordChar = true;
+            pictureBox2.Image = Properties.Resources.eye_close;
         }
         private string GenerateAuthCode()
         {
@@ -94,15 +98,23 @@ namespace YP2023
 
                 _mySqlDataAdapter.SelectCommand = _mySqlCommand;
                 _mySqlDataAdapter.Fill(_dataTable);
-
                 if (_dataTable.Rows.Count > 0)
                 {
-                    Form2 form = new Form2();
-                    form.namelogin = namelogin;
-                    this.Hide();
-                    form.Show();
+                    if (loginUser == "admin")
+                    {
+                        Form4 form4 = new Form4();
+                        this.Hide();
+                        form4.Show();
+                    }
+                    else
+                    {
+                        Form2 form = new Form2();
+                        form.namelogin = namelogin;
+                        this.Hide();
+                        form.Show();
 
-                    User user = new User(loginUser);
+                        User user = new User(loginUser);
+                    }
                 }
                 else
                 {
@@ -138,8 +150,8 @@ namespace YP2023
             UserName = textBox4.Text;
             UserPhone = maskedTextBox1.Text;
             UserPassword = textBox3.Text;
-            
-            
+
+
             DB _databaseManager = new DB();
             DataTable _dataTable = new DataTable();
             MySqlDataAdapter _mySqlDataAdapter = new MySqlDataAdapter();
@@ -215,7 +227,7 @@ namespace YP2023
             }
             reader.Close();
             _databaseManager.CloseConnection();
-           
+
         }
 
         private bool IsValid(string text)
@@ -290,6 +302,29 @@ namespace YP2023
                 button2.Enabled = true;
             }
         }
-    }
 
+                
+        private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
+        {
+            TextBox2.UseSystemPasswordChar = false;
+        }
+
+        private void pictureBox1_MouseEnter(object sender, EventArgs e)
+        {
+            TextBox2.UseSystemPasswordChar = false;
+            pictureBox1.Image = Properties.Resources.eye_open;
+            textBox3.UseSystemPasswordChar = false;
+            pictureBox2.Image = Properties.Resources.eye_open;
+        }
+
+        private void pictureBox1_MouseLeave(object sender, EventArgs e)
+        {
+            TextBox2.UseSystemPasswordChar = true;
+            pictureBox1.Image = Properties.Resources.eye_close;
+            textBox3.UseSystemPasswordChar = true;
+            pictureBox2.Image = Properties.Resources.eye_close;
+        }
+    }
 }
+
+
