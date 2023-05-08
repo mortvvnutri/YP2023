@@ -255,15 +255,10 @@ namespace YP2023
 
         private void button2_Click(object sender, EventArgs e)
         {
-            
             DeleteSelectedRow();
-            
         }
 
-        private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            
-        }
+        
         private void button3_Click(object sender, EventArgs e)
         {
             if (dataGridView1.SelectedCells.Count > 0)
