@@ -6,10 +6,6 @@ using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using System.Data;
-using static YP2023.Form3;
-using System.Xml.Linq;
-using System.Data.SqlClient;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace YP2023
 {
@@ -214,8 +210,8 @@ namespace YP2023
                     form3.Password = UserPassword;
                     form3.Phone = UserPhone;
                     form3.Email = UserEmail;
-                    this.Close();
-                    form3.ShowDialog();
+                    this.Hide();
+                    form3.Show();
                 }
                 else
                 {
@@ -313,16 +309,31 @@ namespace YP2023
         {
             TextBox2.UseSystemPasswordChar = false;
             pictureBox1.Image = Properties.Resources.eye_open;
-            textBox3.UseSystemPasswordChar = false;
-            pictureBox2.Image = Properties.Resources.eye_open;
         }
 
         private void pictureBox1_MouseLeave(object sender, EventArgs e)
         {
             TextBox2.UseSystemPasswordChar = true;
             pictureBox1.Image = Properties.Resources.eye_close;
+        }        
+
+        private void pictureBox2_MouseEnter(object sender, EventArgs e)
+        {
+            textBox3.UseSystemPasswordChar = false;
+            pictureBox2.Image = Properties.Resources.eye_open;
+        }
+
+        private void pictureBox2_MouseLeave(object sender, EventArgs e)
+        {
             textBox3.UseSystemPasswordChar = true;
             pictureBox2.Image = Properties.Resources.eye_close;
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Form5 form5 = new Form5();
+            this.Hide();
+            form5.Show();
         }
     }
 }

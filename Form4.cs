@@ -5,7 +5,6 @@ using System.Data;
 using System.Security.Cryptography;
 using System.Text;
 using System.Windows.Forms;
-using static Mysqlx.Expect.Open.Types.Condition.Types;
 
 
 namespace YP2023
@@ -31,8 +30,6 @@ namespace YP2023
                 int rowIndex = dataGridView1.SelectedRows[0].Index;
                 int id = Convert.ToInt32(dataGridView1.Rows[rowIndex].Cells["id"].Value);
                 DB _databaseManager = new DB();
-                DataTable _dataTable = new DataTable();
-                MySqlDataAdapter _mySqlDataAdapter = new MySqlDataAdapter();
                 string query = "DELETE FROM Avt WHERE id = @id";
 
 
@@ -42,7 +39,7 @@ namespace YP2023
                     _databaseManager.GetConnection.Open();
 
                     command.Parameters.AddWithValue("@id", id);
-                    if (MessageBox.Show("\"Вы уверены,что хотите удалить этого абитуриента?\nПосле удаления его данные будет не восстановить\nВсё ещё настроены решительно?", "Внимание!", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    if (MessageBox.Show("Вы уверены,что хотите удалить этого абитуриента?\nПосле удаления его данные будет не восстановить\nВсё ещё настроены решительно?", "Внимание!", MessageBoxButtons.YesNo) == DialogResult.Yes)
                     {
                         command.ExecuteNonQuery();
                     }
@@ -167,8 +164,6 @@ namespace YP2023
             dataGridView1.Columns.Add(column15);
 
             DB _databaseManager = new DB();
-            DataTable _dataTable = new DataTable();
-            MySqlDataAdapter _mySqlDataAdapter = new MySqlDataAdapter();
             MySqlCommand command = new MySqlCommand("SELECT * FROM Avt", _databaseManager.GetConnection);
             _databaseManager.GetConnection.Open();
             object encryptedValue = command.ExecuteScalar();
@@ -214,8 +209,6 @@ namespace YP2023
         {
             dataGridView1.Rows.Clear(); 
             DB _databaseManager = new DB();
-            DataTable _dataTable = new DataTable();
-            MySqlDataAdapter _mySqlDataAdapter = new MySqlDataAdapter();
 
             MySqlCommand command = new MySqlCommand("SELECT * FROM Avt", _databaseManager.GetConnection);
             try
@@ -265,13 +258,34 @@ namespace YP2023
             {
                 int selectedRowIndex = dataGridView1.SelectedCells[0].RowIndex;
                 DataGridViewRow selectedRow = dataGridView1.Rows[selectedRowIndex];
+                if (dataGridView1.CurrentCell.ColumnIndex == 2)
+                {
+                    // Открыть диалоговое окно для изменения значения
+                    string oldValue = selectedRow.Cells[2].Value != null ? selectedRow.Cells[2].Value.ToString() : "";
+                    string newValue = Interaction.InputBox("Введите новое значение", "Редактирование ячейки", oldValue);
+                    if (newValue != "")
+                    {
+                        // Обновление значения ячейки
+                        selectedRow.Cells[2].Value = newValue;
 
+                        DB _databaseManager = new DB();
+
+                        _databaseManager.GetConnection.Open();
+                        MySqlCommand command = new MySqlCommand("UPDATE Avt SET password = @newValue WHERE id = @id", _databaseManager.GetConnection);
+                        command.Parameters.AddWithValue("@newValue", newValue);
+                        command.Parameters.AddWithValue("@id", selectedRow.Cells[0].Value);
+                        command.ExecuteNonQuery();
+
+                        _databaseManager.GetConnection.Close();
+                    }
+
+                }
                 // Проверка, что ячейка column4 была выбрана
                 if (dataGridView1.CurrentCell.ColumnIndex == 3)
                 {
                     // Открыть диалоговое окно для изменения значения
                     string oldValue = selectedRow.Cells[3].Value != null ? selectedRow.Cells[3].Value.ToString() : "";
-                    string newValue = Microsoft.VisualBasic.Interaction.InputBox("Введите новое значение", "Редактирование ячейки", oldValue);
+                    string newValue = Interaction.InputBox("Введите новое значение", "Редактирование ячейки", oldValue);
                     if (newValue != "")
                     {
                         // Обновление значения ячейки
@@ -296,7 +310,7 @@ namespace YP2023
                 {
                     // Открыть диалоговое окно для изменения значения
                     string oldValue = selectedRow.Cells[4].Value != null ? selectedRow.Cells[4].Value.ToString() : "";
-                    string newValue = Microsoft.VisualBasic.Interaction.InputBox("Введите новое значение", "Редактирование ячейки", oldValue);
+                    string newValue = Interaction.InputBox("Введите новое значение", "Редактирование ячейки", oldValue);
                     if (newValue != "")
                     {
                         // Обновление значения ячейки
@@ -317,7 +331,12 @@ namespace YP2023
             }
         }
 
-
+        private void button4_Click(object sender, EventArgs e)
+        {
+            Form1 form1 = new Form1();
+            this.Hide();
+            form1.Show();
+        }
     }
 }
     

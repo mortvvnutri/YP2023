@@ -35,8 +35,9 @@
             // 
             // textBox1
             // 
+            this.textBox1.BackColor = System.Drawing.Color.AntiqueWhite;
             this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox1.Location = new System.Drawing.Point(145, 148);
+            this.textBox1.Location = new System.Drawing.Point(147, 155);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(140, 29);
             this.textBox1.TabIndex = 0;
@@ -53,19 +54,21 @@
             // 
             // button1
             // 
+            this.button1.BackColor = System.Drawing.Color.LightPink;
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button1.Location = new System.Drawing.Point(119, 217);
+            this.button1.Location = new System.Drawing.Point(128, 217);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(178, 35);
             this.button1.TabIndex = 2;
             this.button1.Text = "Да будет так";
-            this.button1.UseVisualStyleBackColor = true;
+            this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // Form3
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(444, 365);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label1);

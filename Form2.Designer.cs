@@ -66,6 +66,7 @@
             // 
             // Kont_page
             // 
+            this.Kont_page.BackColor = System.Drawing.Color.SeaShell;
             this.Kont_page.Controls.Add(this.textBox6);
             this.Kont_page.Controls.Add(this.label2);
             this.Kont_page.Controls.Add(this.textBox5);
@@ -75,7 +76,6 @@
             this.Kont_page.Size = new System.Drawing.Size(730, 658);
             this.Kont_page.TabIndex = 1;
             this.Kont_page.Text = "Контактные данные";
-            this.Kont_page.UseVisualStyleBackColor = true;
             // 
             // textBox6
             // 
@@ -126,7 +126,7 @@
             this.ComboBox1.Location = new System.Drawing.Point(344, 439);
             this.ComboBox1.Name = "ComboBox1";
             this.ComboBox1.Size = new System.Drawing.Size(200, 32);
-            this.ComboBox1.TabIndex = 32;
+            this.ComboBox1.TabIndex = 11;
             // 
             // V_M
             // 
@@ -134,7 +134,7 @@
             this.V_M.Location = new System.Drawing.Point(428, 293);
             this.V_M.Name = "V_M";
             this.V_M.Size = new System.Drawing.Size(44, 28);
-            this.V_M.TabIndex = 31;
+            this.V_M.TabIndex = 9;
             this.V_M.TabStop = true;
             this.V_M.Text = "М";
             this.V_M.UseVisualStyleBackColor = true;
@@ -142,12 +142,10 @@
             // V_w
             // 
             this.V_w.AutoSize = true;
-            this.V_w.Checked = true;
             this.V_w.Location = new System.Drawing.Point(360, 293);
             this.V_w.Name = "V_w";
             this.V_w.Size = new System.Drawing.Size(44, 28);
-            this.V_w.TabIndex = 30;
-            this.V_w.TabStop = true;
+            this.V_w.TabIndex = 8;
             this.V_w.Text = "Ж";
             this.V_w.UseVisualStyleBackColor = true;
             // 
@@ -156,49 +154,53 @@
             this.TextBox4.Location = new System.Drawing.Point(344, 486);
             this.TextBox4.Name = "TextBox4";
             this.TextBox4.Size = new System.Drawing.Size(200, 29);
-            this.TextBox4.TabIndex = 29;
+            this.TextBox4.TabIndex = 12;
             // 
             // TextBox2
             // 
             this.TextBox2.Location = new System.Drawing.Point(316, 178);
             this.TextBox2.Name = "TextBox2";
             this.TextBox2.Size = new System.Drawing.Size(200, 29);
-            this.TextBox2.TabIndex = 27;
+            this.TextBox2.TabIndex = 6;
+            this.TextBox2.TextChanged += new System.EventHandler(this.TextBox2_TextChanged);
             // 
             // TextBox1
             // 
             this.TextBox1.Location = new System.Drawing.Point(316, 133);
             this.TextBox1.Name = "TextBox1";
             this.TextBox1.Size = new System.Drawing.Size(200, 29);
-            this.TextBox1.TabIndex = 26;
+            this.TextBox1.TabIndex = 5;
+            this.TextBox1.TextChanged += new System.EventHandler(this.TextBox1_TextChanged);
             // 
             // V_firstname
             // 
             this.V_firstname.Location = new System.Drawing.Point(316, 85);
             this.V_firstname.Name = "V_firstname";
             this.V_firstname.Size = new System.Drawing.Size(200, 29);
-            this.V_firstname.TabIndex = 25;
+            this.V_firstname.TabIndex = 4;
+            this.V_firstname.TextChanged += new System.EventHandler(this.V_firstname_TextChanged);
             // 
             // V_date_priem
             // 
             this.V_date_priem.Location = new System.Drawing.Point(316, 41);
             this.V_date_priem.Name = "V_date_priem";
             this.V_date_priem.Size = new System.Drawing.Size(200, 29);
-            this.V_date_priem.TabIndex = 24;
+            this.V_date_priem.TabIndex = 3;
             // 
             // DateTimePicker2
             // 
             this.DateTimePicker2.Location = new System.Drawing.Point(344, 532);
             this.DateTimePicker2.Name = "DateTimePicker2";
             this.DateTimePicker2.Size = new System.Drawing.Size(200, 29);
-            this.DateTimePicker2.TabIndex = 23;
+            this.DateTimePicker2.TabIndex = 13;
+            this.DateTimePicker2.ValueChanged += new System.EventHandler(this.DateTimePicker2_ValueChanged);
             // 
             // DateTimePicker1
             // 
             this.DateTimePicker1.Location = new System.Drawing.Point(316, 243);
             this.DateTimePicker1.Name = "DateTimePicker1";
             this.DateTimePicker1.Size = new System.Drawing.Size(200, 29);
-            this.DateTimePicker1.TabIndex = 22;
+            this.DateTimePicker1.TabIndex = 7;
             // 
             // Z_pasport
             // 
@@ -324,6 +326,7 @@
             // 
             // Sved_page
             // 
+            this.Sved_page.BackColor = System.Drawing.Color.Gainsboro;
             this.Sved_page.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.Sved_page.Controls.Add(this.textBox3);
             this.Sved_page.Controls.Add(this.button2);
@@ -356,7 +359,7 @@
             this.Sved_page.Size = new System.Drawing.Size(730, 658);
             this.Sved_page.TabIndex = 0;
             this.Sved_page.Text = "Общие сведения";
-            this.Sved_page.UseVisualStyleBackColor = true;
+            this.Sved_page.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Sved_page_MouseMove);
             // 
             // textBox3
             // 
@@ -364,26 +367,30 @@
             this.textBox3.MaxLength = 8;
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(200, 29);
-            this.textBox3.TabIndex = 35;
+            this.textBox3.TabIndex = 10;
+            this.textBox3.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
+            this.textBox3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox3_KeyPress);
             // 
             // button2
             // 
+            this.button2.BackColor = System.Drawing.Color.LightCyan;
             this.button2.Location = new System.Drawing.Point(414, 593);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(130, 40);
-            this.button2.TabIndex = 34;
+            this.button2.TabIndex = 14;
             this.button2.Text = "Клац";
-            this.button2.UseVisualStyleBackColor = true;
+            this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button1
             // 
+            this.button1.BackColor = System.Drawing.Color.PapayaWhip;
             this.button1.Location = new System.Drawing.Point(163, 593);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(130, 40);
             this.button1.TabIndex = 33;
             this.button1.Text = "Выход";
-            this.button1.UseVisualStyleBackColor = true;
+            this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // Form2

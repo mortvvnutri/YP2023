@@ -3,15 +3,20 @@ using System.Data;
 using System.Text;
 using System.Windows.Forms;
 using System.Security.Cryptography;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using MySql.Data.MySqlClient;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
+using System.Text.RegularExpressions;
 
 
 namespace YP2023
 {
     public partial class Form2 : Form
     {
+        public bool tB3 = false;
+        public bool V_f;
+        public bool TB1;
+        public bool TB2;
+        public bool DTP1 = false;
+        public string myRegex = @"\b[А-ЯЁ][а-яё]*\b";
         public string namelogin { get; set; }
         public Form2()
         {
@@ -56,8 +61,6 @@ namespace YP2023
 
                 // Закрываем соединение с базой данных
                 _databaseManager.CloseConnection();
-
-                
             }
         }
 
@@ -72,11 +75,10 @@ namespace YP2023
 
         private void Form2_Shown(object sender, EventArgs e)
         {
+            ComboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
             V_date_priem.Format = DateTimePicker1.Format = DateTimePicker2.Format = DateTimePickerFormat.Custom;
             V_date_priem.CustomFormat = DateTimePicker1.CustomFormat = DateTimePicker2.CustomFormat = "yyyy/MM/dd";
             DB _databaseManager = new DB();
-            DataTable _dataTable = new DataTable();
-            MySqlDataAdapter _mySqlDataAdapter = new MySqlDataAdapter();
             // Подготовка запроса на выборку
             string selectQuery = "SELECT * FROM Avt WHERE login = @UserLogin";
             MySqlCommand myCommand = new MySqlCommand(selectQuery, _databaseManager.GetConnection);
@@ -118,6 +120,55 @@ namespace YP2023
             // Закрытие ридера и соединения с базой данных
             reader.Close();
             _databaseManager.CloseConnection();
+        }
+
+        private void textBox3_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsDigit(e.KeyChar) && e.KeyChar != '\b')
+            {
+                e.Handled = true; // Отменить ввод символа, если это не цифра или Backspace
+            }
+        }
+
+        private void textBox3_TextChanged(object sender, EventArgs e)
+        {
+            if (textBox3.Text.Length == 8)
+            {
+                tB3 = true;
+            }
+        }
+
+        private void V_firstname_TextChanged(object sender, EventArgs e)
+        {
+            V_f = Regex.IsMatch(V_firstname.Text, myRegex);
+        }
+
+        private void TextBox1_TextChanged(object sender, EventArgs e)
+        {
+            TB1 = Regex.IsMatch(TextBox1.Text, myRegex);
+        }
+
+        private void TextBox2_TextChanged(object sender, EventArgs e)
+        {
+            TB2 = Regex.IsMatch(TextBox2.Text, myRegex);
+        }
+        private void DateTimePicker2_ValueChanged(object sender, EventArgs e)
+        {
+            if (DateTimePicker1.Value.Date != DateTime.Today)
+            {
+                DTP1 = true;
+            }
+        }
+        private void Sved_page_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (ComboBox1.Items.Count > 0 && DTP1 && TB1 && TB2 && tB3 && V_f && (V_w.Checked || V_M.Checked))
+            {
+                button2.Enabled = true;
+            }
+            else 
+            {
+                button2.Enabled = false;
+            }
         }
     }
 }
