@@ -7,9 +7,9 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace YP2023
 {
-    public partial class Form3 : Form
+    public partial class Verify : Form
     {
-        public Form3()
+        public Verify()
         {
             InitializeComponent();
         }
@@ -45,7 +45,7 @@ namespace YP2023
                         if (_mySqlCommand.ExecuteNonQuery() == 1)
                         {
                             MessageBox.Show("Аккаунт создан", "Внимание!");
-                            Form1 form = new Form1();
+                            LK form = new LK();
                             this.Hide();
                             form.Show();
                         }

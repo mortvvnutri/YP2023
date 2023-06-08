@@ -1,6 +1,6 @@
 ﻿namespace YP2023
 {
-    partial class Form4
+    partial class Admin_panel
     {
         /// <summary>
         /// Required designer variable.

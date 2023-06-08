@@ -9,7 +9,7 @@ using System.Data;
 
 namespace YP2023
 {
-    public partial class Form1 : Form
+    public partial class LK : Form
     {
         private bool IsLogin
         {
@@ -17,8 +17,8 @@ namespace YP2023
             {
                 bool been = false;
 
-                string loginUser = TextBox1.Text;
-                string passwordUser = TextBox2.Text;
+                string loginUser = Login_Vhod.Text;
+                string passwordUser = Parol_Vhod.Text;
 
                 DB _databaseManager = new DB();
                 DataTable _dataTable = new DataTable();
@@ -47,12 +47,12 @@ namespace YP2023
         public string UserPassword;
         public string UserEmail;
         public string namelogin;
-        public Form1()
+        public LK()
         {
             InitializeComponent();
-            TextBox2.UseSystemPasswordChar = true;
+            Parol_Vhod.UseSystemPasswordChar = true;
             pictureBox1.Image = Properties.Resources.eye_close;
-            textBox3.UseSystemPasswordChar = true;
+            Parol_Reg.UseSystemPasswordChar = true;
             pictureBox2.Image = Properties.Resources.eye_close;
         }
         private string GenerateAuthCode()
@@ -69,15 +69,15 @@ namespace YP2023
 
         private void maskedTextBox1_MouseMove(object sender, MouseEventArgs e)
         {
-            maskedTextBox1.Focus();
-            maskedTextBox1.SelectionStart = 1;
+            masked_number.Focus();
+            masked_number.SelectionStart = 1;
         }
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            string loginUser = TextBox1.Text;
+            string loginUser = Login_Vhod.Text;
             namelogin = loginUser;
-            string passwordUser = TextBox2.Text;
+            string passwordUser = Parol_Vhod.Text;
 
             DB _databaseManager = new DB();
             DataTable _dataTable = new DataTable();
@@ -98,13 +98,13 @@ namespace YP2023
                 {
                     if (loginUser == "admin")
                     {
-                        Form4 form4 = new Form4();
+                        Admin_panel form4 = new Admin_panel();
                         this.Hide();
                         form4.Show();
                     }
                     else
                     {
-                        Form2 form = new Form2();
+                        Data_User form = new Data_User();
                         form.namelogin = namelogin;
                         this.Hide();
                         form.Show();
@@ -143,9 +143,9 @@ namespace YP2023
             savedAuthCode = authCode;
             string toEmail = emailTextBox.Text;
             UserEmail = toEmail;
-            UserName = textBox4.Text;
-            UserPhone = maskedTextBox1.Text;
-            UserPassword = textBox3.Text;
+            UserName = Login_Reg.Text;
+            UserPhone = masked_number.Text;
+            UserPassword = Parol_Reg.Text;
 
 
             DB _databaseManager = new DB();
@@ -204,14 +204,14 @@ namespace YP2023
 
                     // Сохраняем код аутентификации для последующей проверки
                     savedAuthCode = authCode;
-                    Form3 form3 = new Form3();
-                    form3.Code = savedAuthCode; // передаем сохраненный код в форму
-                    form3.Name = UserName;
-                    form3.Password = UserPassword;
-                    form3.Phone = UserPhone;
-                    form3.Email = UserEmail;
+                    Verify Verify = new Verify();
+                    Verify.Code = savedAuthCode; // передаем сохраненный код в форму
+                    Verify.Name = UserName;
+                    Verify.Password = UserPassword;
+                    Verify.Phone = UserPhone;
+                    Verify.Email = UserEmail;
                     this.Hide();
-                    form3.Show();
+                    Verify.Show();
                 }
                 else
                 {
@@ -237,27 +237,27 @@ namespace YP2023
         }
         private void maskedTextBox1_TextChanged(object sender, EventArgs e)
         {
-            string text = maskedTextBox1.Text;
+            string text = masked_number.Text;
             if (IsValid(text))
             {
-                if (IsValid(maskedTextBox1.Text))
+                if (IsValid(masked_number.Text))
                 {
-                    maskedTextBox1.BackColor = Color.LightGreen;
+                    masked_number.BackColor = Color.LightGreen;
                     isValidTelephone = true;
                 }
                 else
                 {
-                    maskedTextBox1.BackColor = Color.Salmon;
+                    masked_number.BackColor = Color.Salmon;
                 }
             }
             else
             {
-                maskedTextBox1.BackColor = Color.Salmon;
+                masked_number.BackColor = Color.Salmon;
             }
         }
         private void OpenCodeVerificationForm(string code)
         {
-            Form3 codeVerificationForm = new Form3();
+            Verify codeVerificationForm = new Verify();
             codeVerificationForm.Code = code;
             codeVerificationForm.ShowDialog();
         }
@@ -292,48 +292,41 @@ namespace YP2023
 
         private void TabPage2_MouseMove(object sender, MouseEventArgs e)
         {
-            button2.Enabled = false;
-            if (isValidTelephone && isValidEmail && !string.IsNullOrEmpty(textBox4.Text) && !string.IsNullOrEmpty(textBox3.Text))
+            Knob_Reg.Enabled = false;
+            if (isValidTelephone && isValidEmail && !string.IsNullOrEmpty(Login_Reg.Text) && !string.IsNullOrEmpty(Parol_Reg.Text))
             {
-                button2.Enabled = true;
+                Knob_Reg.Enabled = true;
             }
         }
 
                 
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
         {
-            TextBox2.UseSystemPasswordChar = false;
+            Parol_Vhod.UseSystemPasswordChar = false;
         }
 
         private void pictureBox1_MouseEnter(object sender, EventArgs e)
         {
-            TextBox2.UseSystemPasswordChar = false;
+            Parol_Vhod.UseSystemPasswordChar = false;
             pictureBox1.Image = Properties.Resources.eye_open;
         }
 
         private void pictureBox1_MouseLeave(object sender, EventArgs e)
         {
-            TextBox2.UseSystemPasswordChar = true;
+            Parol_Vhod.UseSystemPasswordChar = true;
             pictureBox1.Image = Properties.Resources.eye_close;
         }        
 
         private void pictureBox2_MouseEnter(object sender, EventArgs e)
         {
-            textBox3.UseSystemPasswordChar = false;
+            Parol_Reg.UseSystemPasswordChar = false;
             pictureBox2.Image = Properties.Resources.eye_open;
         }
 
         private void pictureBox2_MouseLeave(object sender, EventArgs e)
         {
-            textBox3.UseSystemPasswordChar = true;
+            Parol_Reg.UseSystemPasswordChar = true;
             pictureBox2.Image = Properties.Resources.eye_close;
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            Form5 form5 = new Form5();
-            this.Hide();
-            form5.Show();
         }
     }
 }

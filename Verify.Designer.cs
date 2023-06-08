@@ -1,6 +1,6 @@
 ﻿namespace YP2023
 {
-    partial class Form3
+    partial class Verify
     {
         /// <summary>
         /// Required designer variable.
@@ -64,7 +64,7 @@
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // Form3
+            // Verify
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -73,7 +73,7 @@
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox1);
-            this.Name = "Form3";
+            this.Name = "Verify";
             this.Text = "Аутентификация";
             this.ResumeLayout(false);
             this.PerformLayout();

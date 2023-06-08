@@ -1,6 +1,6 @@
 ﻿namespace YP2023
 {
-    partial class Form2
+    partial class Data_User
     {
         /// <summary>
         /// Required designer variable.
@@ -37,15 +37,13 @@
             this.V_M = new System.Windows.Forms.RadioButton();
             this.V_w = new System.Windows.Forms.RadioButton();
             this.TextBox4 = new System.Windows.Forms.TextBox();
-            this.TextBox2 = new System.Windows.Forms.TextBox();
-            this.TextBox1 = new System.Windows.Forms.TextBox();
-            this.V_firstname = new System.Windows.Forms.TextBox();
+            this.V_patronymic = new System.Windows.Forms.TextBox();
+            this.V_name = new System.Windows.Forms.TextBox();
+            this.V_surname = new System.Windows.Forms.TextBox();
             this.V_date_priem = new System.Windows.Forms.DateTimePicker();
-            this.DateTimePicker2 = new System.Windows.Forms.DateTimePicker();
-            this.DateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.V_date_birth = new System.Windows.Forms.DateTimePicker();
             this.Z_pasport = new System.Windows.Forms.Label();
             this.Z_sved_obraz = new System.Windows.Forms.Label();
-            this.Z_obraz_date = new System.Windows.Forms.Label();
             this.Z_uch_zav = new System.Windows.Forms.Label();
             this.Z_obraz = new System.Windows.Forms.Label();
             this.Z_pol = new System.Windows.Forms.Label();
@@ -56,9 +54,11 @@
             this.Z_priem_date = new System.Windows.Forms.Label();
             this.Vkladki = new System.Windows.Forms.TabControl();
             this.Sved_page = new System.Windows.Forms.TabPage();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
+            this.V_passport = new System.Windows.Forms.TextBox();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
             this.Kont_page.SuspendLayout();
             this.Vkladki.SuspendLayout();
             this.Sved_page.SuspendLayout();
@@ -73,7 +73,7 @@
             this.Kont_page.Controls.Add(this.label1);
             this.Kont_page.Location = new System.Drawing.Point(4, 33);
             this.Kont_page.Name = "Kont_page";
-            this.Kont_page.Size = new System.Drawing.Size(730, 658);
+            this.Kont_page.Size = new System.Drawing.Size(730, 729);
             this.Kont_page.TabIndex = 1;
             this.Kont_page.Text = "Контактные данные";
             // 
@@ -119,10 +119,12 @@
             // 
             this.ComboBox1.FormattingEnabled = true;
             this.ComboBox1.Items.AddRange(new object[] {
-            "основное общее",
-            "среднее общее",
-            "среднее профессиональное",
-            "высшее"});
+            "7 класс",
+            "8 класс",
+            "9 класс",
+            "10 класс",
+            "11 класс",
+            "СПО"});
             this.ComboBox1.Location = new System.Drawing.Point(344, 439);
             this.ComboBox1.Name = "ComboBox1";
             this.ComboBox1.Size = new System.Drawing.Size(200, 32);
@@ -156,29 +158,29 @@
             this.TextBox4.Size = new System.Drawing.Size(200, 29);
             this.TextBox4.TabIndex = 12;
             // 
-            // TextBox2
+            // V_patronymic
             // 
-            this.TextBox2.Location = new System.Drawing.Point(316, 178);
-            this.TextBox2.Name = "TextBox2";
-            this.TextBox2.Size = new System.Drawing.Size(200, 29);
-            this.TextBox2.TabIndex = 6;
-            this.TextBox2.TextChanged += new System.EventHandler(this.TextBox2_TextChanged);
+            this.V_patronymic.Location = new System.Drawing.Point(316, 178);
+            this.V_patronymic.Name = "V_patronymic";
+            this.V_patronymic.Size = new System.Drawing.Size(200, 29);
+            this.V_patronymic.TabIndex = 6;
+            this.V_patronymic.TextChanged += new System.EventHandler(this.TextBox2_TextChanged);
             // 
-            // TextBox1
+            // V_name
             // 
-            this.TextBox1.Location = new System.Drawing.Point(316, 133);
-            this.TextBox1.Name = "TextBox1";
-            this.TextBox1.Size = new System.Drawing.Size(200, 29);
-            this.TextBox1.TabIndex = 5;
-            this.TextBox1.TextChanged += new System.EventHandler(this.TextBox1_TextChanged);
+            this.V_name.Location = new System.Drawing.Point(316, 133);
+            this.V_name.Name = "V_name";
+            this.V_name.Size = new System.Drawing.Size(200, 29);
+            this.V_name.TabIndex = 5;
+            this.V_name.TextChanged += new System.EventHandler(this.TextBox1_TextChanged);
             // 
-            // V_firstname
+            // V_surname
             // 
-            this.V_firstname.Location = new System.Drawing.Point(316, 85);
-            this.V_firstname.Name = "V_firstname";
-            this.V_firstname.Size = new System.Drawing.Size(200, 29);
-            this.V_firstname.TabIndex = 4;
-            this.V_firstname.TextChanged += new System.EventHandler(this.V_firstname_TextChanged);
+            this.V_surname.Location = new System.Drawing.Point(316, 85);
+            this.V_surname.Name = "V_surname";
+            this.V_surname.Size = new System.Drawing.Size(200, 29);
+            this.V_surname.TabIndex = 4;
+            this.V_surname.TextChanged += new System.EventHandler(this.V_firstname_TextChanged);
             // 
             // V_date_priem
             // 
@@ -187,20 +189,12 @@
             this.V_date_priem.Size = new System.Drawing.Size(200, 29);
             this.V_date_priem.TabIndex = 3;
             // 
-            // DateTimePicker2
+            // V_date_birth
             // 
-            this.DateTimePicker2.Location = new System.Drawing.Point(344, 532);
-            this.DateTimePicker2.Name = "DateTimePicker2";
-            this.DateTimePicker2.Size = new System.Drawing.Size(200, 29);
-            this.DateTimePicker2.TabIndex = 13;
-            this.DateTimePicker2.ValueChanged += new System.EventHandler(this.DateTimePicker2_ValueChanged);
-            // 
-            // DateTimePicker1
-            // 
-            this.DateTimePicker1.Location = new System.Drawing.Point(316, 243);
-            this.DateTimePicker1.Name = "DateTimePicker1";
-            this.DateTimePicker1.Size = new System.Drawing.Size(200, 29);
-            this.DateTimePicker1.TabIndex = 7;
+            this.V_date_birth.Location = new System.Drawing.Point(316, 243);
+            this.V_date_birth.Name = "V_date_birth";
+            this.V_date_birth.Size = new System.Drawing.Size(200, 29);
+            this.V_date_birth.TabIndex = 7;
             // 
             // Z_pasport
             // 
@@ -221,16 +215,6 @@
             this.Z_sved_obraz.Size = new System.Drawing.Size(209, 20);
             this.Z_sved_obraz.TabIndex = 17;
             this.Z_sved_obraz.Text = "Сведения об образовании";
-            // 
-            // Z_obraz_date
-            // 
-            this.Z_obraz_date.AutoSize = true;
-            this.Z_obraz_date.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.Z_obraz_date.Location = new System.Drawing.Point(159, 532);
-            this.Z_obraz_date.Name = "Z_obraz_date";
-            this.Z_obraz_date.Size = new System.Drawing.Size(132, 20);
-            this.Z_obraz_date.TabIndex = 20;
-            this.Z_obraz_date.Text = "Дата окончания";
             // 
             // Z_uch_zav
             // 
@@ -321,29 +305,29 @@
             this.Vkladki.Margin = new System.Windows.Forms.Padding(4);
             this.Vkladki.Name = "Vkladki";
             this.Vkladki.SelectedIndex = 0;
-            this.Vkladki.Size = new System.Drawing.Size(738, 695);
+            this.Vkladki.Size = new System.Drawing.Size(738, 766);
             this.Vkladki.TabIndex = 1;
             // 
             // Sved_page
             // 
             this.Sved_page.BackColor = System.Drawing.Color.Gainsboro;
             this.Sved_page.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.Sved_page.Controls.Add(this.textBox3);
+            this.Sved_page.Controls.Add(this.label3);
+            this.Sved_page.Controls.Add(this.checkedListBox1);
+            this.Sved_page.Controls.Add(this.V_passport);
             this.Sved_page.Controls.Add(this.button2);
             this.Sved_page.Controls.Add(this.button1);
             this.Sved_page.Controls.Add(this.ComboBox1);
             this.Sved_page.Controls.Add(this.V_M);
             this.Sved_page.Controls.Add(this.V_w);
             this.Sved_page.Controls.Add(this.TextBox4);
-            this.Sved_page.Controls.Add(this.TextBox2);
-            this.Sved_page.Controls.Add(this.TextBox1);
-            this.Sved_page.Controls.Add(this.V_firstname);
+            this.Sved_page.Controls.Add(this.V_patronymic);
+            this.Sved_page.Controls.Add(this.V_name);
+            this.Sved_page.Controls.Add(this.V_surname);
             this.Sved_page.Controls.Add(this.V_date_priem);
-            this.Sved_page.Controls.Add(this.DateTimePicker2);
-            this.Sved_page.Controls.Add(this.DateTimePicker1);
+            this.Sved_page.Controls.Add(this.V_date_birth);
             this.Sved_page.Controls.Add(this.Z_pasport);
             this.Sved_page.Controls.Add(this.Z_sved_obraz);
-            this.Sved_page.Controls.Add(this.Z_obraz_date);
             this.Sved_page.Controls.Add(this.Z_uch_zav);
             this.Sved_page.Controls.Add(this.Z_obraz);
             this.Sved_page.Controls.Add(this.Z_pol);
@@ -356,25 +340,42 @@
             this.Sved_page.Margin = new System.Windows.Forms.Padding(4);
             this.Sved_page.Name = "Sved_page";
             this.Sved_page.Padding = new System.Windows.Forms.Padding(4);
-            this.Sved_page.Size = new System.Drawing.Size(730, 658);
+            this.Sved_page.Size = new System.Drawing.Size(730, 729);
             this.Sved_page.TabIndex = 0;
             this.Sved_page.Text = "Общие сведения";
             this.Sved_page.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Sved_page_MouseMove);
             // 
-            // textBox3
+            // checkedListBox1
             // 
-            this.textBox3.Location = new System.Drawing.Point(344, 340);
-            this.textBox3.MaxLength = 8;
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(200, 29);
-            this.textBox3.TabIndex = 10;
-            this.textBox3.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
-            this.textBox3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox3_KeyPress);
+            this.checkedListBox1.FormattingEnabled = true;
+            this.checkedListBox1.Items.AddRange(new object[] {
+            "Русский язык",
+            "Математика",
+            "История",
+            "Обществознание",
+            "Биология",
+            "География",
+            "Химия",
+            "Литература"});
+            this.checkedListBox1.Location = new System.Drawing.Point(344, 535);
+            this.checkedListBox1.Name = "checkedListBox1";
+            this.checkedListBox1.Size = new System.Drawing.Size(200, 124);
+            this.checkedListBox1.TabIndex = 34;
+            // 
+            // V_passport
+            // 
+            this.V_passport.Location = new System.Drawing.Point(344, 340);
+            this.V_passport.MaxLength = 8;
+            this.V_passport.Name = "V_passport";
+            this.V_passport.Size = new System.Drawing.Size(200, 29);
+            this.V_passport.TabIndex = 10;
+            this.V_passport.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
+            this.V_passport.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox3_KeyPress);
             // 
             // button2
             // 
             this.button2.BackColor = System.Drawing.Color.LightCyan;
-            this.button2.Location = new System.Drawing.Point(414, 593);
+            this.button2.Location = new System.Drawing.Point(414, 680);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(130, 40);
             this.button2.TabIndex = 14;
@@ -385,7 +386,7 @@
             // button1
             // 
             this.button1.BackColor = System.Drawing.Color.PapayaWhip;
-            this.button1.Location = new System.Drawing.Point(163, 593);
+            this.button1.Location = new System.Drawing.Point(163, 680);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(130, 40);
             this.button1.TabIndex = 33;
@@ -393,15 +394,25 @@
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // Form2
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label3.Location = new System.Drawing.Point(151, 564);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(172, 40);
+            this.label3.TabIndex = 35;
+            this.label3.Text = "Желаемые предметы\r\nдля сдачи экзамена";
+            // 
+            // Data_User
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(740, 695);
+            this.ClientSize = new System.Drawing.Size(740, 766);
             this.Controls.Add(this.Vkladki);
-            this.Name = "Form2";
-            this.Text = "Главная";
-            this.Shown += new System.EventHandler(this.Form2_Shown);
+            this.Name = "Data_User";
+            this.Text = "Информация об обучающемся";
+            this.Shown += new System.EventHandler(this.Data_User_Shown);
             this.Kont_page.ResumeLayout(false);
             this.Kont_page.PerformLayout();
             this.Vkladki.ResumeLayout(false);
@@ -418,15 +429,13 @@
         internal System.Windows.Forms.RadioButton V_M;
         internal System.Windows.Forms.RadioButton V_w;
         internal System.Windows.Forms.TextBox TextBox4;
-        internal System.Windows.Forms.TextBox TextBox2;
-        internal System.Windows.Forms.TextBox TextBox1;
-        internal System.Windows.Forms.TextBox V_firstname;
+        internal System.Windows.Forms.TextBox V_patronymic;
+        internal System.Windows.Forms.TextBox V_name;
+        internal System.Windows.Forms.TextBox V_surname;
         internal System.Windows.Forms.DateTimePicker V_date_priem;
-        internal System.Windows.Forms.DateTimePicker DateTimePicker2;
-        internal System.Windows.Forms.DateTimePicker DateTimePicker1;
+        internal System.Windows.Forms.DateTimePicker V_date_birth;
         internal System.Windows.Forms.Label Z_pasport;
         internal System.Windows.Forms.Label Z_sved_obraz;
-        internal System.Windows.Forms.Label Z_obraz_date;
         internal System.Windows.Forms.Label Z_uch_zav;
         internal System.Windows.Forms.Label Z_obraz;
         internal System.Windows.Forms.Label Z_pol;
@@ -439,10 +448,12 @@
         internal System.Windows.Forms.TabPage Sved_page;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox V_passport;
         private System.Windows.Forms.TextBox textBox6;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textBox5;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.CheckedListBox checkedListBox1;
+        internal System.Windows.Forms.Label label3;
     }
 }

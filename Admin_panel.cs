@@ -9,9 +9,9 @@ using System.Windows.Forms;
 
 namespace YP2023
 {
-    public partial class Form4 : Form
+    public partial class Admin_panel : Form
     {
-        public Form4()
+        public Admin_panel()
         {
             InitializeComponent();
         }
@@ -85,7 +85,7 @@ namespace YP2023
 
             var column6 = new DataGridViewColumn();
             column6.HeaderText = "Дата приёма";
-            column6.DefaultCellStyle.Format = "dd.MM.yyyy"; // замените на нужный формат даты
+            column6.DefaultCellStyle.Format = "dd.MM.yyyy";
             column6.Width = 100;
             column6.Name = "date_priem";
             column6.CellTemplate = new DataGridViewTextBoxCell();
@@ -110,7 +110,7 @@ namespace YP2023
 
             var column10 = new DataGridViewColumn();
             column10.HeaderText = "Дата рождения";
-            column10.DefaultCellStyle.Format = "dd.MM.yyyy"; // замените на нужный формат даты
+            column10.DefaultCellStyle.Format = "dd.MM.yyyy";
             column10.Width = 100;
             column10.Name = "date_r";
             column10.CellTemplate = new DataGridViewTextBoxCell();
@@ -333,9 +333,9 @@ namespace YP2023
 
         private void button4_Click(object sender, EventArgs e)
         {
-            Form1 form1 = new Form1();
+            LK LK = new LK();
             this.Hide();
-            form1.Show();
+            LK.Show();
         }
     }
 }
