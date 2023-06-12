@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using System.Data;
 using static System.Net.Mime.MediaTypeNames;
+using YourNamespace;
 
 namespace YP2023
 {

@@ -19,6 +19,12 @@ namespace YP2023
             if (connection.State == System.Data.ConnectionState.Open)
                 connection.Close();
         }
+        public void ExecuteQuery(string query)
+        {
+            MySqlCommand command = new MySqlCommand(query, connection);
+            command.ExecuteNonQuery();
+        }
+
 
         // Возвращаем значение объекта соединения
         public MySqlConnection GetConnection { get { return connection; } }

@@ -1,344 +1,613 @@
-﻿using MySql.Data.MySqlClient;
-using System;
-using Microsoft.VisualBasic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Security.Cryptography;
 using System.Text;
 using System.Windows.Forms;
+using System.Xml.Linq;
+using MySql.Data.MySqlClient;
+using Mysqlx.Crud;
+using YP2023;
 
-
-namespace YP2023
+namespace YourNamespace
 {
     public partial class Admin_panel : Form
     {
+        private MySqlConnection connection;
+        private MySqlCommand command;
+        private MySqlDataAdapter adapter;
+        private DataTable avtTable;
+        private DataTable prepodTable;
+        private DataTable raspisTable;
+        private DataTable groupTable;
+        private DataTable groupAvtTable;
+        private DataTable groupPrepodTable;
+        public DataGridViewRow selectedRow1;
+        public DataGridViewRow selectedRow2;
+        public DataGridViewRow selectedRow3;
+        public DataGridViewRow selectedRow4;
+        public DataGridViewRow selectedRow5;
+        public DataGridViewRow selectedRow6;
+        public string value1;
+        public string value2;
+        public string value3;
+        public string value4;
+        public string value5;
+        public string value6;
+        public int lastRowIndex2;
+        public int lastRowIndex3;
+        public int lastRowIndex4;
+        public int lastRowIndex5;
+        public int lastRowIndex6;
         public Admin_panel()
         {
             InitializeComponent();
+            InitializeDatabase();
+            dataGridView6.CellClick += dataGridView6_CellClick;
+            dataGridView5.CellClick += dataGridView5_CellClick;
+            dataGridView4.CellClick += dataGridView4_CellClick;
+            dataGridView3.CellClick += dataGridView3_CellClick;
+            dataGridView2.CellClick += dataGridView2_CellClick;
+            dataGridView1.CellClick += dataGridView1_CellClick;
+
         }
-        private string Decrypt(string encryptedValueString)
+        private void InitializeDatabase()
         {
-            byte[] encryptedData = Convert.FromBase64String(encryptedValueString);
-            byte[] decryptedData = ProtectedData.Unprotect(encryptedData, null, DataProtectionScope.CurrentUser);
-            return Encoding.UTF8.GetString(decryptedData);
-        }
-        private void DeleteSelectedRow()
-        {
+            string connectionString = "server=localhost;port=3306;username=root;password=111;database=PP";
+            connection = new MySqlConnection(connectionString);
+            command = new MySqlCommand();
+            adapter = new MySqlDataAdapter();
+            avtTable = new DataTable();
+            prepodTable = new DataTable();
+            raspisTable = new DataTable();
+            groupTable = new DataTable();
+            groupAvtTable = new DataTable();
+            groupPrepodTable = new DataTable();
+
+            // Загрузка данных таблицы Avt в DataGridView1
+            command.CommandText = "SELECT * FROM Avt";
+            command.Connection = connection;
+            adapter.SelectCommand = command;
+            adapter.Fill(avtTable);
+            dataGridView1.DataSource = avtTable;
             
+            // Загрузка данных таблицы prepod в DataGridView2
+            command.CommandText = "SELECT * FROM prepod";
+            adapter.Fill(prepodTable);
+            dataGridView2.DataSource = prepodTable;
+            lastRowIndex2 = dataGridView2.Rows.Count - 1;
 
-            if (dataGridView1.SelectedRows.Count > 0)
+            // Загрузка данных таблицы raspis в DataGridView3
+            command.CommandText = "SELECT * FROM raspis";
+            adapter.Fill(raspisTable);
+            dataGridView3.DataSource = raspisTable;
+            lastRowIndex3 = dataGridView3.Rows.Count - 1;
+
+            command.CommandText = "SELECT * FROM `group`";
+            adapter.Fill(groupTable);
+            dataGridView4.DataSource = groupTable;
+            lastRowIndex4 = dataGridView4.Rows.Count - 1;
+
+            command.CommandText = "SELECT * FROM group_avt";
+            adapter.Fill(groupAvtTable);
+            dataGridView5.DataSource = groupAvtTable;
+            lastRowIndex5 = dataGridView5.Rows.Count - 1;
+
+            command.CommandText = "SELECT * FROM group_prepod";
+            adapter.Fill(groupPrepodTable);
+            dataGridView6.DataSource = groupPrepodTable;
+            lastRowIndex6 = dataGridView6.Rows.Count - 1;
+        }
+
+
+
+
+        private void btnNew1_Click(object sender, EventArgs e)
+        {
+            avtTable.Clear();
+            command.CommandText = "SELECT * FROM Avt";
+            adapter.Fill(avtTable);
+            dataGridView1.DataSource = avtTable;
+        }
+        private void btnNew2_Click(object sender, EventArgs e)
+        {
+            prepodTable.Clear();
+            command.CommandText = "SELECT * FROM prepod";
+            adapter.Fill(prepodTable);
+            dataGridView2.DataSource = prepodTable;
+            //lastRowIndex2 = dataGridView2.Rows.Count - 1;
+        }
+        private void btnNew3_Click(object sender, EventArgs e)
+        {
+            raspisTable.Clear();
+            command.CommandText = "SELECT * FROM raspis";
+            adapter.Fill(raspisTable);
+            dataGridView3.DataSource = raspisTable;
+        }
+        private void btnNew4_Click(object sender, EventArgs e)
+        {
+            raspisTable.Clear();
+            command.CommandText = "SELECT * FROM raspis";
+            adapter.Fill(raspisTable);
+            dataGridView3.DataSource = raspisTable;
+        }
+
+        private void btnNew5_Click(object sender, EventArgs e)
+        {
+            groupAvtTable.Clear();
+            command.CommandText = "SELECT * FROM group_avt";
+            adapter.Fill(groupAvtTable);
+            dataGridView5.DataSource = groupAvtTable;
+        }
+
+        private void btnNew6_Click(object sender, EventArgs e)
+        {
+            groupPrepodTable.Clear();
+            command.CommandText = "SELECT * FROM group_prepod";
+            adapter.Fill(groupPrepodTable);
+            dataGridView6.DataSource = groupPrepodTable;
+        }
+
+
+        private void btnDel1_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Вы действительно решительно хотите удалить строку,\nсоответствующую day_id = " + value1, "Подтвердите удаление", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                int rowIndex = dataGridView1.SelectedRows[0].Index;
-                int id = Convert.ToInt32(dataGridView1.Rows[rowIndex].Cells["id"].Value);
-                DB _databaseManager = new DB();
-                string query = "DELETE FROM Avt WHERE id = @id";
-
-
-
-                MySqlCommand command = new MySqlCommand(query, _databaseManager.GetConnection);
+                if (dataGridView1.SelectedRows.Count != 0)
                 {
-                    _databaseManager.GetConnection.Open();
+                    DB _databaseManager = new DB();
+                    string _commandString = "DELETE FROM `Avt` WHERE `Avt`.`id` = " + value1;
+                    MySqlCommand _command = new MySqlCommand(_commandString, _databaseManager.GetConnection);
 
-                    command.Parameters.AddWithValue("@id", id);
-                    if (MessageBox.Show("Вы уверены,что хотите удалить этого абитуриента?\nПосле удаления его данные будет не восстановить\nВсё ещё настроены решительно?", "Внимание!", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    try
                     {
-                        command.ExecuteNonQuery();
+                        _databaseManager.OpenConnection();
+                        _command.ExecuteNonQuery();
+                        MessageBox.Show("Данные удалены успешно", "Внимание!");
                     }
-                dataGridView1.Rows.RemoveAt(rowIndex);
+                    catch
+                    {
+                        MessageBox.Show("Ошибка работы с базой данных", "Ошибка!");
+                    }
+                    finally
+                    {
+                        _databaseManager.CloseConnection();
+                    }
                 }
-
-                _databaseManager.GetConnection.Close();
+                else
+                    MessageBox.Show("Выбран неверный элемент", "Ошибка!");
             }
         }
 
-        private void HeaderOfTheTable()
+        private void butbtnDel2_Click(object sender, EventArgs e)
         {
-            var column1 = new DataGridViewColumn();
-            column1.HeaderText = "Id";
-            column1.Width = 70;
-            column1.Name = "id";
-            column1.Frozen = true;
-            column1.CellTemplate = new DataGridViewTextBoxCell();
-
-            var column2 = new DataGridViewColumn();
-            column2.HeaderText = "Логин";
-            column2.Width = 120;
-            column2.Name = "login";
-            column2.CellTemplate = new DataGridViewTextBoxCell();
-
-            var column3 = new DataGridViewColumn();
-            column3.HeaderText = "Пароль";
-            column3.Width = 120;
-            column3.Name = "password";
-            column3.CellTemplate = new DataGridViewTextBoxCell();
-
-            var column4 = new DataGridViewColumn();
-            column4.HeaderText = "Номер телефона";
-            column4.Width = 100;
-            column4.Name = "number";
-            column4.CellTemplate = new DataGridViewTextBoxCell();
-
-            var column5 = new DataGridViewColumn();
-            column5.HeaderText = "Почта";
-            column5.Width = 180;
-            column5.Name = "email";
-            column5.CellTemplate = new DataGridViewTextBoxCell();
-
-            var column6 = new DataGridViewColumn();
-            column6.HeaderText = "Дата приёма";
-            column6.DefaultCellStyle.Format = "dd.MM.yyyy";
-            column6.Width = 100;
-            column6.Name = "date_priem";
-            column6.CellTemplate = new DataGridViewTextBoxCell();
-
-            var column7 = new DataGridViewColumn();
-            column7.HeaderText = "Фамилия";
-            column7.Width = 120;
-            column7.Name = "last_name";
-            column7.CellTemplate = new DataGridViewTextBoxCell();
-
-            var column8 = new DataGridViewColumn();
-            column8.HeaderText = "Имя";
-            column8.Width = 120;
-            column8.Name = "name";
-            column8.CellTemplate = new DataGridViewTextBoxCell();
-
-            var column9 = new DataGridViewColumn();
-            column9.HeaderText = "Отчество";
-            column9.Width = 120;
-            column9.Name = "father_name";
-            column9.CellTemplate = new DataGridViewTextBoxCell();
-
-            var column10 = new DataGridViewColumn();
-            column10.HeaderText = "Дата рождения";
-            column10.DefaultCellStyle.Format = "dd.MM.yyyy";
-            column10.Width = 100;
-            column10.Name = "date_r";
-            column10.CellTemplate = new DataGridViewTextBoxCell();
-
-            var column11 = new DataGridViewColumn();
-            column11.HeaderText = "Пол";
-            column11.Width = 50;
-            column11.Name = "pol";
-            column11.CellTemplate = new DataGridViewTextBoxCell();
-
-            var column12 = new DataGridViewColumn();
-            column12.HeaderText = "Паспорт";
-            column12.Width = 100;
-            column12.Name = "pasport";
-            column12.CellTemplate = new DataGridViewTextBoxCell();
-
-            var column13 = new DataGridViewColumn();
-            column13.HeaderText = "Образование";
-            column13.Width = 120;
-            column13.Name = "obraz";
-            column13.CellTemplate = new DataGridViewTextBoxCell();
-
-            var column14 = new DataGridViewColumn();
-            column14.HeaderText = "Учебное заведение";
-            column14.Width =200;
-            column14.Name = "ych";
-            column14.CellTemplate = new DataGridViewTextBoxCell();
-
-            var column15 = new DataGridViewColumn();
-            column15.HeaderText = "Дата образования";
-            column15.DefaultCellStyle.Format = "dd.MM.yyyy"; // формат даты
-            column15.Width = 100;
-            column15.Name = "date_o";
-            column15.CellTemplate = new DataGridViewTextBoxCell();
-
-
-            dataGridView1.Columns.Add(column1);
-            dataGridView1.Columns.Add(column2);
-            dataGridView1.Columns.Add(column3);
-            dataGridView1.Columns.Add(column4);
-            dataGridView1.Columns.Add(column5);
-            dataGridView1.Columns.Add(column6);
-            dataGridView1.Columns.Add(column7);
-            dataGridView1.Columns.Add(column8);
-            dataGridView1.Columns.Add(column9);
-            dataGridView1.Columns.Add(column10);
-            dataGridView1.Columns.Add(column11);
-            dataGridView1.Columns.Add(column12);
-            dataGridView1.Columns.Add(column13);
-            dataGridView1.Columns.Add(column14);
-            dataGridView1.Columns.Add(column15);
-
-            DB _databaseManager = new DB();
-            MySqlCommand command = new MySqlCommand("SELECT * FROM Avt", _databaseManager.GetConnection);
-            _databaseManager.GetConnection.Open();
-            object encryptedValue = command.ExecuteScalar();
-            MySqlDataReader reader = command.ExecuteReader();
-            while (reader.Read())
+            if (MessageBox.Show("Вы действительно решительно хотите удалить строку,\nсоответствующую day_id = " + value2, "Подтвердите удаление", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                var decryptedValue = reader.IsDBNull(reader.GetOrdinal("pasport")) ? "" : Decrypt(reader["pasport"].ToString());
-                dataGridView1.Rows.Add(reader["id"], reader["login"], reader["password"], reader["number"], reader["email"],
-                    reader["date_priem"], reader["last_name"], reader["name"], reader["father_name"], reader["date_r"], reader["pol"],
-                    decryptedValue, reader["obraz"], reader["ych"], reader["date_o"]);
-            }
+                if (dataGridView2.SelectedRows.Count != 0)
+                {
+                    DB _databaseManager = new DB();
+                    string _commandString = "DELETE FROM `prepod` WHERE `prepod`.`prepod_id` = " + value2;
+                    MySqlCommand _command = new MySqlCommand(_commandString, _databaseManager.GetConnection);
 
-            reader.Close();
-            _databaseManager.GetConnection.Close();
+                    try
+                    {
+                        _databaseManager.OpenConnection();
+                        _command.ExecuteNonQuery();
+                        MessageBox.Show("Данные удалены успешно", "Внимание!");
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Ошибка работы с базой данных", "Ошибка!");
+                    }
+                    finally
+                    {
+                        _databaseManager.CloseConnection();
+                    }
+                }
+                else
+                    MessageBox.Show("Выбран неверный элемент", "Ошибка!");
+            }
         }
-        private void Form4_Shown(object sender, EventArgs e)
+        private void btnDel3_Click_1(object sender, EventArgs e)
         {
-            dataGridView1.AllowUserToAddRows = false;
-            dataGridView1.ReadOnly = true;
-            dataGridView1.ScrollBars = ScrollBars.Both;
-            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
-            HeaderOfTheTable();
-            DB databaseManager = new DB();
-            try
+            if (MessageBox.Show("Вы действительно решительно хотите удалить строку,\nсоответствующую day_id = " + value3, "Подтвердите удаление", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                MySqlCommand myCommand = new MySqlCommand("SELECT * FROM Avt ", databaseManager.GetConnection);
-                databaseManager.GetConnection.Open();
-                MySqlDataReader reader = myCommand.ExecuteReader();
+                if (dataGridView3.SelectedRows.Count != 0)
+                {
+                    DB _databaseManager = new DB();
+                    string _commandString = "DELETE FROM `raspis` WHERE `raspis`.`day_id` = " + value3;
+                    MySqlCommand _command = new MySqlCommand(_commandString, _databaseManager.GetConnection);
+
+                    try
+                    {
+                        _databaseManager.OpenConnection();
+                        _command.ExecuteNonQuery();
+                        MessageBox.Show("Данные удалены успешно", "Внимание!");
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Ошибка работы с базой данных", "Ошибка!");
+                    }
+                    finally
+                    {
+                        _databaseManager.CloseConnection();
+                    }
+                }
+                else
+                    MessageBox.Show("Выбран неверный элемент", "Ошибка!");
             }
-            catch (MySqlException ex)
+        }
+        private void btnDel4_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Вы действительно решительно хотите удалить строку,\nсоответствующую day_id = " + value4, "Подтвердите удаление", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                MessageBox.Show("Ошибка работы с базой данных: " + ex.Message, "Ошибка!");
-            }
-            finally
-            {
-                databaseManager.CloseConnection();
+                if (dataGridView4.SelectedRows.Count != 0)
+                {
+                    DB _databaseManager = new DB();
+                    string _commandString = "DELETE FROM `group` WHERE `group`.`group_id` = " + value4;
+                    MySqlCommand _command = new MySqlCommand(_commandString, _databaseManager.GetConnection);
+
+                    try
+                    {
+                        _databaseManager.OpenConnection();
+                        _command.ExecuteNonQuery();
+                        MessageBox.Show("Данные удалены успешно", "Внимание!");
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Ошибка работы с базой данных", "Ошибка!");
+                    }
+                    finally
+                    {
+                        _databaseManager.CloseConnection();
+                    }
+                }
+                else
+                    MessageBox.Show("Выбран неверный элемент", "Ошибка!");
             }
 
-            
+        }
+        private void btnDel5_Click(object sender, EventArgs e)
+        {
+            if(MessageBox.Show("Вы действительно решительно хотите удалить строку,\nсоответствующую day_id = " + value5, "Подтвердите удаление", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                if (dataGridView5.SelectedRows.Count != 0)
+                {
+                    DB _databaseManager = new DB();
+                    string _commandString = "DELETE FROM `group_avt` WHERE `group_avt`.`group_id` = " + value5;
+                    MySqlCommand _command = new MySqlCommand(_commandString, _databaseManager.GetConnection);
+
+                    try
+                    {
+                        _databaseManager.OpenConnection();
+                        _command.ExecuteNonQuery();
+                        MessageBox.Show("Данные удалены успешно", "Внимание!");
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Ошибка работы с базой данных", "Ошибка!");
+                    }
+                    finally
+                    {
+                        _databaseManager.CloseConnection();
+                    }
+                }
+                else
+                    MessageBox.Show("Выбран неверный элемент", "Ошибка!");
+            }
+        }
+        private void btnDel6_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Вы действительно решительно хотите удалить строку,\nсоответствующую day_id = " + value6, "Подтвердите удаление", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                if (dataGridView6.SelectedRows.Count != 0)
+                {
+                    DB _databaseManager = new DB();
+                    string _commandString = "DELETE FROM `group_prepod` WHERE `group_prepod`.`group_id` = " + value6;
+                    MySqlCommand _command = new MySqlCommand(_commandString, _databaseManager.GetConnection);
+
+                    try
+                    {
+                        _databaseManager.OpenConnection();
+                        _command.ExecuteNonQuery();
+                        MessageBox.Show("Данные удалены успешно", "Внимание!");
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Ошибка работы с базой данных", "Ошибка!");
+                    }
+                    finally
+                    {
+                        _databaseManager.CloseConnection();
+                    }
+                }
+                else
+                    MessageBox.Show("Выбран неверный элемент", "Ошибка!");
+            }
+        }
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                selectedRow1 = dataGridView1.Rows[e.RowIndex];
+                value1 = selectedRow1.Cells["id"].Value.ToString();
+            }
+        }
+        private void dataGridView2_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                selectedRow2 = dataGridView2.Rows[e.RowIndex];
+                value2 = selectedRow2.Cells["prepod_id"].Value.ToString();
+            }
+        }
+        private void dataGridView3_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                selectedRow3 = dataGridView3.Rows[e.RowIndex];
+                value3 = selectedRow3.Cells["day_id"].Value.ToString();
+            }
+        }
+        private void dataGridView4_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                selectedRow4 = dataGridView4.Rows[e.RowIndex];
+                value4 = selectedRow4.Cells["group_id"].Value.ToString();
+            }
+        }
+
+        private void dataGridView5_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                selectedRow5 = dataGridView5.Rows[e.RowIndex];
+                value5 = selectedRow5.Cells["group_id"].Value.ToString();
+            }
+        }
+
+        private void dataGridView6_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                selectedRow6 = dataGridView6.Rows[e.RowIndex];
+                value6 = selectedRow6.Cells["group_id"].Value.ToString();
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            dataGridView1.Rows.Clear(); 
-            DB _databaseManager = new DB();
-
-            MySqlCommand command = new MySqlCommand("SELECT * FROM Avt", _databaseManager.GetConnection);
-            try
-            {
-                _databaseManager.GetConnection.Open();
-                MySqlDataReader reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    // Получаем значения полей записи
-                    int id = reader.IsDBNull(0) ? 0 : reader.GetInt32(0);
-                    string login = reader.IsDBNull(1) ? string.Empty : reader.GetString(1);
-                    string password = reader.IsDBNull(2) ? string.Empty : reader.GetString(2);
-                    string number = reader.IsDBNull(3) ? string.Empty : reader.GetString(3);
-                    string email = reader.IsDBNull(4) ? string.Empty : reader.GetString(4);
-                    DateTime date_priem = reader.IsDBNull(5) ? DateTime.MinValue : reader.GetDateTime(5);
-                    string last_name = reader.IsDBNull(6) ? string.Empty : reader.GetString(6);
-                    string name = reader.IsDBNull(7) ? string.Empty : reader.GetString(7);
-                    string father_name = reader.IsDBNull(8) ? string.Empty : reader.GetString(8);
-                    DateTime date_r = reader.IsDBNull(9) ? DateTime.MinValue : reader.GetDateTime(9);
-                    string pol = reader.IsDBNull(10) ? string.Empty : reader.GetString(10);
-                    string pasport = reader.IsDBNull(11) ? string.Empty : reader.GetString(11);
-                    string obraz = reader.IsDBNull(12) ? string.Empty : reader.GetString(12);
-                    string ych = reader.IsDBNull(13) ? string.Empty : reader.GetString(13);
-                    DateTime date_o = reader.IsDBNull(14) ? DateTime.MinValue : reader.GetDateTime(14);
-
-                    // Добавляем новую строку в DataGridView
-                    dataGridView1.Rows.Add(id, login, password, number, email, date_priem, last_name, name, father_name, date_r, pol, pasport, obraz, ych, date_o);
-                }
-
-                reader.Close();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            DeleteSelectedRow();
+            if (MessageBox.Show("Добавить эти данные в базу данных?", "Внимание!", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                DB _databaseManager = new DB();
+
+                try
+                {
+                    bool add = true;
+                    _databaseManager.OpenConnection();
+
+                    
+
+                    if (Convert.ToString(dataGridView2.Rows[lastRowIndex2].Cells[1].Value) != "" && Convert.ToString(dataGridView2.Rows[lastRowIndex2].Cells[2].Value) != "")
+                    {
+                        string _commandString = "INSERT INTO `prepod` (`prepod_name`, `predmet`) VALUES (@PN, @P)";
+
+                        MySqlCommand _command = new MySqlCommand(_commandString, _databaseManager.GetConnection);
+
+                        _command.Parameters.Add("@PN", MySqlDbType.VarChar).Value = dataGridView2.Rows[lastRowIndex2].Cells[1].Value;
+                        _command.Parameters.Add("@P", MySqlDbType.VarChar).Value = dataGridView2.Rows[lastRowIndex2].Cells[2].Value;
+
+                        if (_command.ExecuteNonQuery() != 1)
+                            add = false;
+                    }
+                    else
+                        MessageBox.Show("Не все поля были заполнены", "Ошибка!");
+                    
+
+                    if (add)
+                        MessageBox.Show("Данные добавлены\nнажмите кнопку 'Обновить' для проверки", "Внимание!");
+                    else
+                        MessageBox.Show("Ошибка добавления данных", "Ошибка!");
+                }
+                catch
+                {
+                    MessageBox.Show("Ошибка работы с базой данных", "Ошибка!");
+                }
+                finally
+                {
+                    _databaseManager.CloseConnection();
+                }
+            }
         }
 
-        
         private void button3_Click(object sender, EventArgs e)
         {
-            if (dataGridView1.SelectedCells.Count > 0)
+            if (MessageBox.Show("Добавить эти данные в базу данных?", "Внимание!", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                int selectedRowIndex = dataGridView1.SelectedCells[0].RowIndex;
-                DataGridViewRow selectedRow = dataGridView1.Rows[selectedRowIndex];
-                if (dataGridView1.CurrentCell.ColumnIndex == 2)
+                DB _databaseManager = new DB();
+
+                try
                 {
-                    // Открыть диалоговое окно для изменения значения
-                    string oldValue = selectedRow.Cells[2].Value != null ? selectedRow.Cells[2].Value.ToString() : "";
-                    string newValue = Interaction.InputBox("Введите новое значение", "Редактирование ячейки", oldValue);
-                    if (newValue != "")
+                    bool add = true;
+                    _databaseManager.OpenConnection();
+
+
+
+                    if (Convert.ToString(dataGridView3.Rows[lastRowIndex4].Cells[1].Value) != "" && Convert.ToString(dataGridView3.Rows[lastRowIndex4].Cells[2].Value) != "")
                     {
-                        // Обновление значения ячейки
-                        selectedRow.Cells[2].Value = newValue;
+                        string _commandString = "INSERT INTO `raspis` (`date`, `kab`, `group_id`) VALUES (@D, @K, @GI)";
 
-                        DB _databaseManager = new DB();
+                        MySqlCommand _command = new MySqlCommand(_commandString, _databaseManager.GetConnection);
 
-                        _databaseManager.GetConnection.Open();
-                        MySqlCommand command = new MySqlCommand("UPDATE Avt SET password = @newValue WHERE id = @id", _databaseManager.GetConnection);
-                        command.Parameters.AddWithValue("@newValue", newValue);
-                        command.Parameters.AddWithValue("@id", selectedRow.Cells[0].Value);
-                        command.ExecuteNonQuery();
+                        DateTime dateValue = Convert.ToDateTime(dataGridView3.Rows[lastRowIndex4].Cells[1].Value);
 
-                        _databaseManager.GetConnection.Close();
+                        _command.Parameters.Add("@D", MySqlDbType.DateTime).Value = dateValue;
+                        _command.Parameters.Add("@K", MySqlDbType.VarChar).Value = dataGridView3.Rows[lastRowIndex4].Cells[2].Value;
+                        _command.Parameters.Add("@GI", MySqlDbType.VarChar).Value = dataGridView3.Rows[lastRowIndex4].Cells[3].Value;
+
+                        if (_command.ExecuteNonQuery() != 1)
+                            add = false;
                     }
 
+                    else
+                        MessageBox.Show("Не все поля были заполнены", "Ошибка!");
+
+
+                    if (add)
+                        MessageBox.Show("Данные добавлены\nнажмите кнопку 'Обновить' для проверки", "Внимание!");
+                    else
+                        MessageBox.Show("Ошибка добавления данных", "Ошибка!");
                 }
-                // Проверка, что ячейка column4 была выбрана
-                if (dataGridView1.CurrentCell.ColumnIndex == 3)
+                catch
                 {
-                    // Открыть диалоговое окно для изменения значения
-                    string oldValue = selectedRow.Cells[3].Value != null ? selectedRow.Cells[3].Value.ToString() : "";
-                    string newValue = Interaction.InputBox("Введите новое значение", "Редактирование ячейки", oldValue);
-                    if (newValue != "")
-                    {
-                        // Обновление значения ячейки
-                        selectedRow.Cells[3].Value = newValue;
-
-                        DB _databaseManager = new DB();
-
-                        _databaseManager.GetConnection.Open();
-                        MySqlCommand command = new MySqlCommand("UPDATE Avt SET number = @newValue WHERE id = @id", _databaseManager.GetConnection);
-                        command.Parameters.AddWithValue("@newValue", newValue);
-                        command.Parameters.AddWithValue("@id", selectedRow.Cells[0].Value);
-                        command.ExecuteNonQuery();
-
-                        _databaseManager.GetConnection.Close();
-                    }
-
+                    MessageBox.Show("Ошибка работы с базой данных", "Ошибка!");
                 }
-                
-
-                // Проверка, что ячейка column5 была выбрана
-                if (dataGridView1.CurrentCell.ColumnIndex == 4)
+                finally
                 {
-                    // Открыть диалоговое окно для изменения значения
-                    string oldValue = selectedRow.Cells[4].Value != null ? selectedRow.Cells[4].Value.ToString() : "";
-                    string newValue = Interaction.InputBox("Введите новое значение", "Редактирование ячейки", oldValue);
-                    if (newValue != "")
-                    {
-                        // Обновление значения ячейки
-                        selectedRow.Cells[4].Value = newValue;
-
-                    // Запись значения в базу данных
-                    DB _databaseManager = new DB();
-
-                    _databaseManager.GetConnection.Open();
-                    MySqlCommand command = new MySqlCommand("UPDATE Avt SET email = @newValue WHERE id = @id", _databaseManager.GetConnection);
-                            command.Parameters.AddWithValue("@newValue", newValue);
-                            command.Parameters.AddWithValue("@id", selectedRow.Cells[0].Value);
-                            command.ExecuteNonQuery();
-
-                        _databaseManager.GetConnection.Close();
-                    }
+                    _databaseManager.CloseConnection();
                 }
             }
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            LK LK = new LK();
-            this.Hide();
-            LK.Show();
+            if (MessageBox.Show("Добавить эти данные в базу данных?", "Внимание!", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                DB _databaseManager = new DB();
+
+                try
+                {
+                    bool add = true;
+                    _databaseManager.OpenConnection();
+
+
+
+                    if (Convert.ToString(dataGridView4.Rows[lastRowIndex4].Cells[1].Value) != "")
+                    {
+                        string _commandString = "INSERT INTO `group` (`group_name`) VALUES (@GN)";
+
+                        MySqlCommand _command = new MySqlCommand(_commandString, _databaseManager.GetConnection);
+                        _command.Parameters.Add("@GN", MySqlDbType.VarChar).Value = dataGridView4.Rows[lastRowIndex4].Cells[1].Value;
+
+                        if (_command.ExecuteNonQuery() != 1)
+                            add = false;
+                    }
+
+                    else
+                        MessageBox.Show("Не все поля были заполнены", "Ошибка!");
+
+
+                    if (add)
+                        MessageBox.Show("Данные добавлены\nнажмите кнопку 'Обновить' для проверки", "Внимание!");
+                    else
+                        MessageBox.Show("Ошибка добавления данных", "Ошибка!");
+                }
+                catch
+                {
+                    MessageBox.Show("Ошибка работы с базой данных", "Ошибка!");
+                }
+                finally
+                {
+                    _databaseManager.CloseConnection();
+                }
+            }
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Добавить эти данные в базу данных?", "Внимание!", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                DB _databaseManager = new DB();
+
+                try
+                {
+                    bool add = true;
+                    _databaseManager.OpenConnection();
+
+
+
+                    if (Convert.ToString(dataGridView5.Rows[lastRowIndex5].Cells[0].Value) != "" && Convert.ToString(dataGridView5.Rows[lastRowIndex5].Cells[1].Value) != "")
+                    {
+                        string _commandString = "INSERT INTO `group_avt` (`group_id`, `id`) VALUES (@GI, @I)";
+
+                        MySqlCommand _command = new MySqlCommand(_commandString, _databaseManager.GetConnection);
+                        _command.Parameters.Add("@GI", MySqlDbType.VarChar).Value = dataGridView5.Rows[lastRowIndex5].Cells[0].Value;
+                        _command.Parameters.Add("@I", MySqlDbType.VarChar).Value = dataGridView5.Rows[lastRowIndex5].Cells[1].Value;
+
+                        if (_command.ExecuteNonQuery() != 1)
+                            add = false;
+                    }
+
+                    else
+                        MessageBox.Show("Не все поля были заполнены", "Ошибка!");
+
+
+                    if (add)
+                        MessageBox.Show("Данные добавлены\nнажмите кнопку 'Обновить' для проверки", "Внимание!");
+                    else
+                        MessageBox.Show("Ошибка добавления данных", "Ошибка!");
+                }
+                catch
+                {
+                    MessageBox.Show("Ошибка работы с базой данных", "Ошибка!");
+                }
+                finally
+                {
+                    _databaseManager.CloseConnection();
+                }
+            }
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Добавить эти данные в базу данных?", "Внимание!", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                DB _databaseManager = new DB();
+
+                try
+                {
+                    bool add = true;
+                    _databaseManager.OpenConnection();
+
+
+
+                    if (Convert.ToString(dataGridView6.Rows[lastRowIndex6].Cells[0].Value) != "" && Convert.ToString(dataGridView6.Rows[lastRowIndex6].Cells[1].Value) != "")
+                    {
+                        string _commandString = "INSERT INTO `group_prepod` (`group_id`, `prepod_id`) VALUES (@GI, @I)";
+
+                        MySqlCommand _command = new MySqlCommand(_commandString, _databaseManager.GetConnection);
+                        _command.Parameters.Add("@GI", MySqlDbType.VarChar).Value = dataGridView6.Rows[lastRowIndex6].Cells[0].Value;
+                        _command.Parameters.Add("@I", MySqlDbType.VarChar).Value = dataGridView6.Rows[lastRowIndex6].Cells[1].Value;
+
+                        if (_command.ExecuteNonQuery() != 1)
+                            add = false;
+                    }
+
+                    else
+                        MessageBox.Show("Не все поля были заполнены", "Ошибка!");
+
+
+                    if (add)
+                        MessageBox.Show("Данные добавлены\nнажмите кнопку 'Обновить' для проверки", "Внимание!");
+                    else
+                        MessageBox.Show("Ошибка добавления данных", "Ошибка!");
+                }
+                catch
+                {
+                    MessageBox.Show("Ошибка работы с базой данных", "Ошибка!");
+                }
+                finally
+                {
+                    _databaseManager.CloseConnection();
+                }
+            }
         }
     }
 }
-    
-
-
