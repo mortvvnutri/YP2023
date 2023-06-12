@@ -4,7 +4,7 @@ namespace YP2023
 {
     internal class DB
     {
-        MySqlConnection connection = new MySqlConnection("server = localhost; port = 3306; username = root; password =; database = PP");
+        MySqlConnection connection = new MySqlConnection("server = localhost; port = 3306; username = root; password = 111; database = PP");
 
         // Метод, который открывает соединение, если оно закрыто
         public void OpenConnection()

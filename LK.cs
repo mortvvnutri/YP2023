@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using System.Data;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace YP2023
 {
@@ -39,6 +40,7 @@ namespace YP2023
             }
         }
 
+        private string text;
         private string savedAuthCode;
         private bool isValidEmail = false;
         private bool isValidTelephone = false;
@@ -47,6 +49,7 @@ namespace YP2023
         public string UserPassword;
         public string UserEmail;
         public string namelogin;
+        public string nameparol;
         public LK()
         {
             InitializeComponent();
@@ -54,17 +57,97 @@ namespace YP2023
             pictureBox1.Image = Properties.Resources.eye_close;
             Parol_Reg.UseSystemPasswordChar = true;
             pictureBox2.Image = Properties.Resources.eye_close;
+            pictureBox3.Image = this.CreateImage(pictureBox3.Width, pictureBox3.Height);
+        }
+        private Bitmap CreateImage(int Width, int Height)
+        {
+            Random rnd = new Random();
+
+            //Создадим изображение
+            Bitmap result = new Bitmap(Width, Height);
+
+            //Вычислим позицию текста
+            int Xpos = 10;
+            int Ypos = 10;
+
+            //Добавим различные цвета ддя текста
+            Brush[] colors = {
+            Brushes.Black,
+            Brushes.Red,
+            Brushes.RoyalBlue,
+            Brushes.Green,
+            Brushes.Yellow,
+            Brushes.White,
+            Brushes.Tomato,
+            Brushes.Sienna,
+            Brushes.Pink };
+
+            //Добавим различные цвета линий
+            Pen[] colorpens = {
+            Pens.Black,
+            Pens.Red,
+            Pens.RoyalBlue,
+            Pens.Green,
+            Pens.Yellow,
+            Pens.White,
+            Pens.Tomato,
+            Pens.Sienna,
+            Pens.Pink };
+
+            //Делаем случайный стиль текста
+            FontStyle[] fontstyle = {
+            FontStyle.Bold,
+            FontStyle.Italic,
+            FontStyle.Regular,
+            FontStyle.Strikeout,
+            FontStyle.Underline};
+
+            //Добавим различные углы поворота текста
+            Int16[] rotate = { 1, -1, 2, -2, 3, -3, 4, -4, 5, -5, 6, -6 };
+
+            //Укажем где рисовать
+            Graphics g = Graphics.FromImage((System.Drawing.Image)result);
+
+            //Пусть фон картинки будет серым
+            g.Clear(Color.Gray);
+
+            //Делаем случайный угол поворота текста
+            g.RotateTransform(rnd.Next(rotate.Length));
+
+            //Генерируем текст
+            text = String.Empty;
+            string ALF = "7890QWERTYUIOPASDFGHJKLZXCVBNM";
+            for (int i = 0; i < 5; ++i)
+                text += ALF[rnd.Next(ALF.Length)];
+
+            //Нарисуем сгенирируемый текст
+            g.DrawString(text,
+            new Font("Arial", 25, fontstyle[rnd.Next(fontstyle.Length)]),
+            colors[rnd.Next(colors.Length)],
+            new PointF(Xpos, Ypos));
+
+            //Добавим немного помех
+            //Линии из углов
+            g.DrawLine(colorpens[rnd.Next(colorpens.Length)],
+            new Point(0, 0),
+            new Point(Width - 1, Height - 1));
+            g.DrawLine(colorpens[rnd.Next(colorpens.Length)],
+            new Point(0, Height - 1),
+            new Point(Width - 1, 0));
+
+            //Белые точки
+            for (int i = 0; i < Width; ++i)
+                for (int j = 0; j < Height; ++j)
+                    if (rnd.Next() % 20 == 0)
+                        result.SetPixel(i, j, Color.White);
+
+            return result;
         }
         private string GenerateAuthCode()
         {
             Random random = new Random();
             int authCode = random.Next(100000, 999999);
             return authCode.ToString();
-        }
-
-        private void TabPage2_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void maskedTextBox1_MouseMove(object sender, MouseEventArgs e)
@@ -78,6 +161,7 @@ namespace YP2023
             string loginUser = Login_Vhod.Text;
             namelogin = loginUser;
             string passwordUser = Parol_Vhod.Text;
+            nameparol = passwordUser;
 
             DB _databaseManager = new DB();
             DataTable _dataTable = new DataTable();
@@ -104,8 +188,9 @@ namespace YP2023
                     }
                     else
                     {
-                        Data_User form = new Data_User();
+                        Timetable form = new Timetable();
                         form.namelogin = namelogin;
+                        form.nameparol = nameparol;
                         this.Hide();
                         form.Show();
 
@@ -179,7 +264,7 @@ namespace YP2023
                     message.From = new MailAddress(senderEmail);
                     message.To.Add(new MailAddress(receiverEmail));
                     message.Subject = "Авторизация";
-                    message.Body = "Ваш код для сбора всей информации о вашей жизни: " + authCode;
+                    message.Body = "Код для подтверждения вашей электронной почты: " + authCode;
 
                     // создание SMTP-клиента
                     SmtpClient client = new SmtpClient("smtp.yandex.ru", 587);
@@ -293,7 +378,7 @@ namespace YP2023
         private void TabPage2_MouseMove(object sender, MouseEventArgs e)
         {
             Knob_Reg.Enabled = false;
-            if (isValidTelephone && isValidEmail && !string.IsNullOrEmpty(Login_Reg.Text) && !string.IsNullOrEmpty(Parol_Reg.Text))
+            if (textBox1.Text == this.text && isValidTelephone && isValidEmail && !string.IsNullOrEmpty(Login_Reg.Text) && !string.IsNullOrEmpty(Parol_Reg.Text))
             {
                 Knob_Reg.Enabled = true;
             }
@@ -328,7 +413,69 @@ namespace YP2023
             Parol_Reg.UseSystemPasswordChar = true;
             pictureBox2.Image = Properties.Resources.eye_close;
         }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            pictureBox3.Image = this.CreateImage(pictureBox3.Width, pictureBox3.Height);
+        }
+
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+
+            string loginUser = Login_Vhod.Text;
+            namelogin = loginUser;
+            string passwordUser = Parol_Vhod.Text;
+            nameparol = passwordUser;
+
+            DB _databaseManager = new DB();
+            DataTable _dataTable = new DataTable();
+            MySqlDataAdapter _mySqlDataAdapter = new MySqlDataAdapter();
+            MySqlCommand _mySqlCommand = new MySqlCommand("SELECT * FROM Avt WHERE login = @UserLogin AND password = @UserPassword", _databaseManager.GetConnection);
+
+
+            try
+            {
+                _mySqlCommand.Parameters.Add("@UserLogin", MySqlDbType.VarChar).Value = loginUser;
+                _mySqlCommand.Parameters.Add("@UserPassword", MySqlDbType.VarChar).Value = passwordUser;
+
+                _databaseManager.OpenConnection();
+
+                _mySqlDataAdapter.SelectCommand = _mySqlCommand;
+                _mySqlDataAdapter.Fill(_dataTable);
+                if (_dataTable.Rows.Count > 0)
+                {
+                    Data_User form = new Data_User();
+                    form.namelogin = namelogin;
+                    form.nameparol = nameparol;
+                    this.Hide();
+                    form.Show();
+
+                    User user = new User(loginUser);
+                }
+                else
+                {
+                    if (IsLogin)
+                        MessageBox.Show("Неправильный пароль", "Внимание!");
+                    else
+                    {
+                        if (MessageBox.Show("Вы у нас впервые\nНеобходимо зарегистрироваться или ввести данные в поля.\nЗарегистрироваться сейчас?", "Внимание!", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                        {
+                            TabControl1.SelectedTab = TabControl1.TabPages[1];
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Ошибка работы с базой данных", "Ошибка!");
+            }
+            finally
+            {
+                _databaseManager.CloseConnection();
+            }
+        }
     }
+    
 }
 
 

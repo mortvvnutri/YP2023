@@ -141,7 +141,7 @@ namespace YP2023
 
             var column15 = new DataGridViewColumn();
             column15.HeaderText = "Дата образования";
-            column15.DefaultCellStyle.Format = "dd.MM.yyyy"; // замените на нужный формат даты
+            column15.DefaultCellStyle.Format = "dd.MM.yyyy"; // формат даты
             column15.Width = 100;
             column15.Name = "date_o";
             column15.CellTemplate = new DataGridViewTextBoxCell();

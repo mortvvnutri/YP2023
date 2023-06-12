@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{E5F56F45-E41E-42C6-B32D-7F68D6CC7E7C}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <RootNamespace>YP2023</RootNamespace>
     <AssemblyName>YP2023</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
@@ -78,6 +78,12 @@
     <Compile Include="Data_User.Designer.cs">
       <DependentUpon>Data_User.cs</DependentUpon>
     </Compile>
+    <Compile Include="Timetable.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Timetable.Designer.cs">
+      <DependentUpon>Timetable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Verify.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -103,6 +109,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Data_User.resx">
       <DependentUpon>Data_User.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Timetable.resx">
+      <DependentUpon>Timetable.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Verify.resx">
       <DependentUpon>Verify.cs</DependentUpon>

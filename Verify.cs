@@ -31,7 +31,7 @@ namespace YP2023
                 if (MessageBox.Show("Сохранить данные?", "Подтвердите сохранение", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     DB _databaseManager = new DB();
-                    MySqlCommand _mySqlCommand = new MySqlCommand("INSERT INTO Avt (id, login, password, number, email) VALUES (@id, @login, @password, @number, @email)", _databaseManager.GetConnection);
+                    MySqlCommand _mySqlCommand = new MySqlCommand("INSERT INTO `Avt` (`id`, `login`, `password`, `number`, `email`) VALUES (@id, @login, @password, @number, @email)", _databaseManager.GetConnection);
                     try
                     {
                         _mySqlCommand.Parameters.Add("@id", MySqlDbType.Int32).Value = 0;
@@ -45,7 +45,7 @@ namespace YP2023
                         if (_mySqlCommand.ExecuteNonQuery() == 1)
                         {
                             MessageBox.Show("Аккаунт создан", "Внимание!");
-                            LK form = new LK();
+                            Data_User form = new Data_User();
                             this.Hide();
                             form.Show();
                         }

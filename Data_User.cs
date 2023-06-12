@@ -5,6 +5,10 @@ using System.Windows.Forms;
 using System.Security.Cryptography;
 using MySql.Data.MySqlClient;
 using System.Text.RegularExpressions;
+using System.Collections.Generic;
+using System.Collections;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using System.Linq;
 
 
 namespace YP2023
@@ -18,22 +22,35 @@ namespace YP2023
         public bool DTP1 = false;
         public string myRegex = @"\b[А-ЯЁ][а-яё]*\b";
         public string namelogin { get; set; }
+        public string nameparol { get; set; }
         public Data_User()
         {
             InitializeComponent();
         }
         public string p;
+        public string o;
         private void button2_Click(object sender, EventArgs e)
         {
-           
-            if (V_w.Checked) { p = "ж"; }
-            if (V_M.Checked) { p = "м"; }
+            if (ege.Checked) { p = "ЕГЭ"; }
+            if (oge.Checked) { p = "ОГЭ"; }
+            if (SPO.Checked) { o = "ССУЗ"; }
+            if (School.Checked) { o = "Школа"; }
+            List<string> selectedItems = new List<string>();
+            foreach (object item in predmcheckedListBox.CheckedItems)
+            {
+                selectedItems.Add(item.ToString() + ",");
+            }
+
+            StringBuilder sb = new StringBuilder();
+            foreach (string item in selectedItems)
+                sb.Append(item.ToString());
             if (MessageBox.Show("Вы уверены что все данные верны?\n Сохранить их?", "Внимание", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 DB _databaseManager = new DB();
 
                 // Создаем команду SQL для вставки записи в таблицу Avt
-                MySqlCommand myCommand = new MySqlCommand("UPDATE Avt SET name=@Name, father_name=@FatherName, date_priem=@DatePriem,last_name=@LastName,date_r=@DateOfBirth, pol=@Gender, pasport=@Passport, obraz=@Obraz, ych=@Ych, date_o=@DateO WHERE  login = @UserLogin", _databaseManager.GetConnection);
+                MySqlCommand myCommand = new MySqlCommand("UPDATE Avt SET name=@Name, father_name=@FatherName, last_name=@LastName,date_r=@DateOfBirth, exam=@Examen, pasport=@Passport, obraz=@Obraz, ych=@Ych, predm = @Predmets WHERE  login = @UserLogin AND password = @UserPassword", _databaseManager.GetConnection);
+
 
                 // Защищаем значение поля pasport
                 byte[] dataToEncrypt = Encoding.UTF8.GetBytes(V_passport.Text);
@@ -41,20 +58,21 @@ namespace YP2023
                 string encryptedString = Convert.ToBase64String(encryptedData);
 
                 // Добавляем параметры в команду SQL
-                myCommand.Parameters.AddWithValue("@DatePriem", V_date_priem.Text);
                 myCommand.Parameters.AddWithValue("@FatherName", V_patronymic.Text);
                 myCommand.Parameters.AddWithValue("@Name", V_name.Text);
                 myCommand.Parameters.AddWithValue("@LastName", V_surname.Text);
                 myCommand.Parameters.AddWithValue("@DateOfBirth", V_date_birth.Value.ToString("yyyy-MM-dd"));
-                myCommand.Parameters.AddWithValue("@Gender", p);
+                myCommand.Parameters.AddWithValue("@Examen", p);
                 myCommand.Parameters.AddWithValue("@Passport", encryptedString);
-                myCommand.Parameters.AddWithValue("@Obraz",ComboBox1.Text);
                 myCommand.Parameters.AddWithValue("@Ych", TextBox4.Text);
-                myCommand.Parameters.AddWithValue("@DateO", V_date_birth.Value.ToString("yyyy-MM-dd"));
+                myCommand.Parameters.AddWithValue("@Obraz", o);
+                myCommand.Parameters.AddWithValue("@Predmets", sb.ToString());
+                
 
-                // Открываем соединение с базой данных
+                //Открываем соединение с базой данных
                 _databaseManager.OpenConnection();
                 myCommand.Parameters.AddWithValue("@UserLogin", namelogin);
+                myCommand.Parameters.AddWithValue("@UserPassword", nameparol);
 
                 // Выполняем команду SQL
                 myCommand.ExecuteNonQuery();
@@ -75,14 +93,15 @@ namespace YP2023
 
         private void Data_User_Shown(object sender, EventArgs e)
         {
-            ComboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
-            V_date_priem.Format = V_date_birth.Format = V_date_birth.Format = DateTimePickerFormat.Custom;
-            V_date_priem.CustomFormat = V_date_birth.CustomFormat = V_date_birth.CustomFormat = "yyyy/MM/dd";
+            //ComboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
+            V_date_birth.Format = DateTimePickerFormat.Custom;
+            V_date_birth.CustomFormat  = "yyyy/MM/dd";
             DB _databaseManager = new DB();
             // Подготовка запроса на выборку
-            string selectQuery = "SELECT * FROM Avt WHERE login = @UserLogin";
+            string selectQuery = "SELECT * FROM Avt WHERE login = @UserLogin AND password = @UserPassword" ;
             MySqlCommand myCommand = new MySqlCommand(selectQuery, _databaseManager.GetConnection);
             myCommand.Parameters.AddWithValue("@UserLogin", namelogin);
+            myCommand.Parameters.AddWithValue("@UserPassword", nameparol);
 
             // Открытие соединения с базой данных
             _databaseManager.OpenConnection();
@@ -93,14 +112,11 @@ namespace YP2023
             if (reader.HasRows)
             {
                 while (reader.Read())
-                { // Переход на первую строку результата
-                    V_date_priem.Text = reader["date_priem"].ToString();
+                {
                     V_patronymic.Text = reader["father_name"].ToString();
                     V_name.Text = reader["name"].ToString();
                     V_surname.Text = reader["last_name"].ToString();
                     V_date_birth.Text = reader["Date_r"].ToString();
-                    if (reader["pol"].ToString() == "ж") { V_w.Checked = true; }
-                    if (reader["pol"].ToString() == "м") { V_M.Checked = true; }
                     if (!reader.IsDBNull(reader.GetOrdinal("pasport")))
                     {
                         string encryptedValueString = reader.GetString("pasport");
@@ -109,11 +125,36 @@ namespace YP2023
                         string decryptedString = Encoding.UTF8.GetString(decryptedData);
                         V_passport.Text = decryptedString;
                     }
-                    ComboBox1.Text = reader["obraz"].ToString();
+                    if (reader["obraz"].ToString() == "ССУЗ") { SPO.Checked = true; }
+                    if (reader["obraz"].ToString() == "Школа") { School.Checked = true; }
+                    if (reader["exam"].ToString() == "ОГЭ") { oge.Checked = true; }
+                    if (reader["exam"].ToString() == "ЕГЭ") { ege.Checked = true; }
+                    TextBox4.Text = reader["ych"].ToString();
                     textBox5.Text = reader["number"].ToString();
                     textBox6.Text = reader["email"].ToString();
-                    TextBox4.Text = reader["ych"].ToString();
-                    V_date_birth.Text = reader["date_o"].ToString();
+                    // Получите значение из базы данных, которое содержит список значений, например, в виде строки с разделителем
+                    string predmValues = reader["predm"].ToString();
+
+                    // Разделите строку на отдельные значения
+                    string[] predmArray = predmValues.Split(',');
+
+
+                    // Пройдитесь по каждому элементу в CheckedListBox
+                    for (int i = 0; i < predmcheckedListBox.Items.Count; i++)
+                    {
+                        // Получите текущий элемент
+                        object item = predmcheckedListBox.Items[i];
+
+                        // Проверьте, содержится ли значение текущего элемента в списке значений из базы данных
+                        foreach (string value in predmArray)
+                        {
+                            if (item.ToString() == value)
+                            {
+                                predmcheckedListBox.SetItemChecked(i, true);
+                                break;
+                            }
+                        }
+                    }
                 }
             }
 
@@ -132,7 +173,7 @@ namespace YP2023
 
         private void textBox3_TextChanged(object sender, EventArgs e)
         {
-            if (V_passport.Text.Length == 8)
+            if (V_passport.Text.Length == 6)
             {
                 tB3 = true;
             }
@@ -143,25 +184,9 @@ namespace YP2023
             V_f = Regex.IsMatch(V_surname.Text, myRegex);
         }
 
-        private void TextBox1_TextChanged(object sender, EventArgs e)
-        {
-            TB1 = Regex.IsMatch(V_name.Text, myRegex);
-        }
-
-        private void TextBox2_TextChanged(object sender, EventArgs e)
-        {
-            TB2 = Regex.IsMatch(V_patronymic.Text, myRegex);
-        }
-        private void DateTimePicker2_ValueChanged(object sender, EventArgs e)
-        {
-            if (V_date_birth.Value.Date != DateTime.Today)
-            {
-                DTP1 = true;
-            }
-        }
         private void Sved_page_MouseMove(object sender, MouseEventArgs e)
         {
-            if (ComboBox1.Items.Count > 0 && DTP1 && TB1 && TB2 && tB3 && V_f && (V_w.Checked || V_M.Checked))
+            if (predmcheckedListBox.CheckedItems.Count > 0 && TB1 && TB2 && tB3 && V_f && (ege.Checked || oge.Checked))
             {
                 button2.Enabled = true;
             }
@@ -169,6 +194,28 @@ namespace YP2023
             {
                 button2.Enabled = false;
             }
+        }
+
+        private void oge_CheckedChanged(object sender, EventArgs e)
+        {
+            SPO.Enabled = false;
+            School.Checked = true;
+        }
+
+        private void ege_CheckedChanged(object sender, EventArgs e)
+        {
+            SPO.Enabled = true;
+            School.Checked = false;
+        }
+
+        private void V_name_TextChanged(object sender, EventArgs e)
+        {
+            TB1 = Regex.IsMatch(V_name.Text, myRegex);
+        }
+
+        private void V_patronymic_TextChanged(object sender, EventArgs e)
+        {
+            TB2 = Regex.IsMatch(V_patronymic.Text, myRegex);
         }
     }
 }

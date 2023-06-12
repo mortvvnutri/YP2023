@@ -37,6 +37,9 @@
             this.Parol_Vhod = new System.Windows.Forms.TextBox();
             this.Login_Vhod = new System.Windows.Forms.TextBox();
             this.TabPage2 = new System.Windows.Forms.TabPage();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.label6 = new System.Windows.Forms.Label();
             this.emailTextBox = new System.Windows.Forms.TextBox();
@@ -47,10 +50,12 @@
             this.label4 = new System.Windows.Forms.Label();
             this.Parol_Reg = new System.Windows.Forms.TextBox();
             this.Login_Reg = new System.Windows.Forms.TextBox();
+            this.button2 = new System.Windows.Forms.Button();
             this.TabControl1.SuspendLayout();
             this.TabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.TabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
@@ -62,13 +67,14 @@
             this.TabControl1.Location = new System.Drawing.Point(0, 5);
             this.TabControl1.Name = "TabControl1";
             this.TabControl1.SelectedIndex = 0;
-            this.TabControl1.Size = new System.Drawing.Size(503, 397);
+            this.TabControl1.Size = new System.Drawing.Size(503, 514);
             this.TabControl1.TabIndex = 5;
             // 
             // TabPage1
             // 
             this.TabPage1.BackColor = System.Drawing.Color.LightGray;
             this.TabPage1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.TabPage1.Controls.Add(this.button2);
             this.TabPage1.Controls.Add(this.pictureBox1);
             this.TabPage1.Controls.Add(this.Knob_Vhod);
             this.TabPage1.Controls.Add(this.Label2);
@@ -79,13 +85,13 @@
             this.TabPage1.Location = new System.Drawing.Point(4, 33);
             this.TabPage1.Name = "TabPage1";
             this.TabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage1.Size = new System.Drawing.Size(495, 360);
+            this.TabPage1.Size = new System.Drawing.Size(495, 477);
             this.TabPage1.TabIndex = 0;
             this.TabPage1.Text = "Вход";
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(407, 174);
+            this.pictureBox1.Location = new System.Drawing.Point(401, 213);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(60, 42);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -98,11 +104,11 @@
             // Knob_Vhod
             // 
             this.Knob_Vhod.BackColor = System.Drawing.Color.MistyRose;
-            this.Knob_Vhod.Location = new System.Drawing.Point(169, 271);
+            this.Knob_Vhod.Location = new System.Drawing.Point(181, 318);
             this.Knob_Vhod.Name = "Knob_Vhod";
             this.Knob_Vhod.Size = new System.Drawing.Size(130, 40);
             this.Knob_Vhod.TabIndex = 6;
-            this.Knob_Vhod.Text = "Клац";
+            this.Knob_Vhod.Text = "Войти";
             this.Knob_Vhod.UseVisualStyleBackColor = false;
             this.Knob_Vhod.Click += new System.EventHandler(this.Button1_Click);
             // 
@@ -110,7 +116,7 @@
             // 
             this.Label2.AutoSize = true;
             this.Label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.Label2.Location = new System.Drawing.Point(69, 181);
+            this.Label2.Location = new System.Drawing.Point(63, 220);
             this.Label2.Name = "Label2";
             this.Label2.Size = new System.Drawing.Size(76, 24);
             this.Label2.TabIndex = 7;
@@ -120,7 +126,7 @@
             // 
             this.Label1.AutoSize = true;
             this.Label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.Label1.Location = new System.Drawing.Point(69, 90);
+            this.Label1.Location = new System.Drawing.Point(63, 129);
             this.Label1.Name = "Label1";
             this.Label1.Size = new System.Drawing.Size(64, 24);
             this.Label1.TabIndex = 6;
@@ -130,7 +136,7 @@
             // 
             this.Parol_Vhod.BackColor = System.Drawing.Color.Ivory;
             this.Parol_Vhod.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.Parol_Vhod.Location = new System.Drawing.Point(216, 181);
+            this.Parol_Vhod.Location = new System.Drawing.Point(210, 220);
             this.Parol_Vhod.Name = "Parol_Vhod";
             this.Parol_Vhod.Size = new System.Drawing.Size(181, 29);
             this.Parol_Vhod.TabIndex = 5;
@@ -139,7 +145,7 @@
             // 
             this.Login_Vhod.BackColor = System.Drawing.Color.Ivory;
             this.Login_Vhod.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.Login_Vhod.Location = new System.Drawing.Point(216, 90);
+            this.Login_Vhod.Location = new System.Drawing.Point(210, 129);
             this.Login_Vhod.Name = "Login_Vhod";
             this.Login_Vhod.Size = new System.Drawing.Size(181, 29);
             this.Login_Vhod.TabIndex = 4;
@@ -147,6 +153,9 @@
             // TabPage2
             // 
             this.TabPage2.BackColor = System.Drawing.Color.LightGray;
+            this.TabPage2.Controls.Add(this.textBox1);
+            this.TabPage2.Controls.Add(this.button1);
+            this.TabPage2.Controls.Add(this.pictureBox3);
             this.TabPage2.Controls.Add(this.pictureBox2);
             this.TabPage2.Controls.Add(this.label6);
             this.TabPage2.Controls.Add(this.emailTextBox);
@@ -160,11 +169,36 @@
             this.TabPage2.Location = new System.Drawing.Point(4, 33);
             this.TabPage2.Name = "TabPage2";
             this.TabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage2.Size = new System.Drawing.Size(495, 360);
+            this.TabPage2.Size = new System.Drawing.Size(495, 477);
             this.TabPage2.TabIndex = 1;
             this.TabPage2.Text = "Регистрация";
-            this.TabPage2.Click += new System.EventHandler(this.TabPage2_Click);
             this.TabPage2.MouseMove += new System.Windows.Forms.MouseEventHandler(this.TabPage2_MouseMove);
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(160, 346);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(169, 29);
+            this.textBox1.TabIndex = 22;
+            // 
+            // button1
+            // 
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button1.Location = new System.Drawing.Point(172, 381);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(140, 29);
+            this.button1.TabIndex = 21;
+            this.button1.Text = "обновить капчу";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.Location = new System.Drawing.Point(160, 276);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(169, 63);
+            this.pictureBox3.TabIndex = 20;
+            this.pictureBox3.TabStop = false;
             // 
             // pictureBox2
             // 
@@ -222,7 +256,7 @@
             // Knob_Reg
             // 
             this.Knob_Reg.BackColor = System.Drawing.Color.Lavender;
-            this.Knob_Reg.Location = new System.Drawing.Point(134, 289);
+            this.Knob_Reg.Location = new System.Drawing.Point(128, 423);
             this.Knob_Reg.Name = "Knob_Reg";
             this.Knob_Reg.Size = new System.Drawing.Size(220, 45);
             this.Knob_Reg.TabIndex = 13;
@@ -268,12 +302,23 @@
             this.Login_Reg.Size = new System.Drawing.Size(181, 29);
             this.Login_Reg.TabIndex = 9;
             // 
+            // button2
+            // 
+            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button2.Location = new System.Drawing.Point(158, 390);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(176, 34);
+            this.button2.TabIndex = 10;
+            this.button2.Text = "Изменить данные";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click_1);
+            // 
             // LK
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.InactiveCaption;
-            this.ClientSize = new System.Drawing.Size(502, 402);
+            this.ClientSize = new System.Drawing.Size(502, 518);
             this.Controls.Add(this.TabControl1);
             this.Name = "LK";
             this.Text = "Личный кабинет";
@@ -283,6 +328,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.TabPage2.ResumeLayout(false);
             this.TabPage2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
 
@@ -309,6 +355,10 @@
         internal System.Windows.Forms.TextBox emailTextBox;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.PictureBox pictureBox3;
+        private System.Windows.Forms.Button button2;
     }
 }
 
