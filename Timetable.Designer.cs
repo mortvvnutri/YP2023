@@ -53,6 +53,7 @@
             this.ExitB.TabIndex = 1;
             this.ExitB.Text = "Выход";
             this.ExitB.UseVisualStyleBackColor = false;
+            this.ExitB.Click += new System.EventHandler(this.ExitB_Click);
             // 
             // Timetable
             // 

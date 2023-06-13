@@ -1,4 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
+using System.Data;
 
 namespace YP2023
 {
@@ -23,6 +24,12 @@ namespace YP2023
         {
             MySqlCommand command = new MySqlCommand(query, connection);
             command.ExecuteNonQuery();
+        }
+        public void ExecuteAdapter(string query, DataTable table)
+        {
+            MySqlCommand command = new MySqlCommand(query, connection);
+            MySqlDataAdapter adapter = new MySqlDataAdapter(command);
+            adapter.Fill(table);
         }
 
 

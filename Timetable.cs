@@ -73,7 +73,13 @@ namespace YP2023
                 MessageBox.Show("Произошла ошибка: " + ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-       
+
+        private void ExitB_Click(object sender, EventArgs e)
+        {
+            LK LK = new LK();
+            this.Close();
+            LK.ShowDialog();
+        }
     }
     
 }

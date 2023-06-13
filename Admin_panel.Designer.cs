@@ -51,6 +51,8 @@
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
@@ -62,17 +64,18 @@
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(38, 23);
+            this.dataGridView1.Location = new System.Drawing.Point(32, 68);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
             this.dataGridView1.Size = new System.Drawing.Size(452, 295);
             this.dataGridView1.TabIndex = 0;
+            this.dataGridView1.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.dataGridView1_CellBeginEdit);
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             // 
             // dataGridView2
             // 
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.Location = new System.Drawing.Point(588, 23);
+            this.dataGridView2.Location = new System.Drawing.Point(582, 68);
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
             this.dataGridView2.Size = new System.Drawing.Size(452, 295);
@@ -82,7 +85,7 @@
             // dataGridView3
             // 
             this.dataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView3.Location = new System.Drawing.Point(38, 402);
+            this.dataGridView3.Location = new System.Drawing.Point(32, 447);
             this.dataGridView3.Name = "dataGridView3";
             this.dataGridView3.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
             this.dataGridView3.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
@@ -93,7 +96,7 @@
             // dataGridView4
             // 
             this.dataGridView4.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView4.Location = new System.Drawing.Point(588, 402);
+            this.dataGridView4.Location = new System.Drawing.Point(582, 447);
             this.dataGridView4.Name = "dataGridView4";
             this.dataGridView4.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
             this.dataGridView4.Size = new System.Drawing.Size(452, 295);
@@ -102,7 +105,7 @@
             // 
             // btnNew1
             // 
-            this.btnNew1.Location = new System.Drawing.Point(289, 345);
+            this.btnNew1.Location = new System.Drawing.Point(283, 390);
             this.btnNew1.Name = "btnNew1";
             this.btnNew1.Size = new System.Drawing.Size(110, 30);
             this.btnNew1.TabIndex = 8;
@@ -112,7 +115,7 @@
             // 
             // btnNew2
             // 
-            this.btnNew2.Location = new System.Drawing.Point(930, 345);
+            this.btnNew2.Location = new System.Drawing.Point(924, 390);
             this.btnNew2.Name = "btnNew2";
             this.btnNew2.Size = new System.Drawing.Size(110, 30);
             this.btnNew2.TabIndex = 9;
@@ -122,17 +125,18 @@
             // 
             // btnDel3
             // 
-            this.btnDel3.Location = new System.Drawing.Point(38, 726);
+            this.btnDel3.BackColor = System.Drawing.Color.IndianRed;
+            this.btnDel3.Location = new System.Drawing.Point(32, 771);
             this.btnDel3.Name = "btnDel3";
             this.btnDel3.Size = new System.Drawing.Size(110, 30);
             this.btnDel3.TabIndex = 10;
             this.btnDel3.Text = "Удалить";
-            this.btnDel3.UseVisualStyleBackColor = true;
+            this.btnDel3.UseVisualStyleBackColor = false;
             this.btnDel3.Click += new System.EventHandler(this.btnDel3_Click_1);
             // 
             // btnNew4
             // 
-            this.btnNew4.Location = new System.Drawing.Point(930, 728);
+            this.btnNew4.Location = new System.Drawing.Point(924, 773);
             this.btnNew4.Name = "btnNew4";
             this.btnNew4.Size = new System.Drawing.Size(110, 30);
             this.btnNew4.TabIndex = 11;
@@ -143,7 +147,7 @@
             // dataGridView5
             // 
             this.dataGridView5.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView5.Location = new System.Drawing.Point(1132, 23);
+            this.dataGridView5.Location = new System.Drawing.Point(1126, 68);
             this.dataGridView5.Name = "dataGridView5";
             this.dataGridView5.Size = new System.Drawing.Size(212, 295);
             this.dataGridView5.TabIndex = 12;
@@ -152,7 +156,7 @@
             // dataGridView6
             // 
             this.dataGridView6.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView6.Location = new System.Drawing.Point(1132, 402);
+            this.dataGridView6.Location = new System.Drawing.Point(1126, 447);
             this.dataGridView6.Name = "dataGridView6";
             this.dataGridView6.Size = new System.Drawing.Size(212, 295);
             this.dataGridView6.TabIndex = 13;
@@ -160,7 +164,7 @@
             // 
             // btnNew5
             // 
-            this.btnNew5.Location = new System.Drawing.Point(1253, 366);
+            this.btnNew5.Location = new System.Drawing.Point(1247, 411);
             this.btnNew5.Name = "btnNew5";
             this.btnNew5.Size = new System.Drawing.Size(110, 30);
             this.btnNew5.TabIndex = 14;
@@ -170,7 +174,7 @@
             // 
             // btnNew6
             // 
-            this.btnNew6.Location = new System.Drawing.Point(1253, 741);
+            this.btnNew6.Location = new System.Drawing.Point(1247, 786);
             this.btnNew6.Name = "btnNew6";
             this.btnNew6.Size = new System.Drawing.Size(110, 30);
             this.btnNew6.TabIndex = 15;
@@ -180,7 +184,7 @@
             // 
             // btnNew3
             // 
-            this.btnNew3.Location = new System.Drawing.Point(380, 726);
+            this.btnNew3.Location = new System.Drawing.Point(374, 771);
             this.btnNew3.Name = "btnNew3";
             this.btnNew3.Size = new System.Drawing.Size(110, 29);
             this.btnNew3.TabIndex = 16;
@@ -190,110 +194,144 @@
             // 
             // btnDel1
             // 
-            this.btnDel1.Location = new System.Drawing.Point(116, 345);
+            this.btnDel1.BackColor = System.Drawing.Color.IndianRed;
+            this.btnDel1.Location = new System.Drawing.Point(110, 390);
             this.btnDel1.Name = "btnDel1";
             this.btnDel1.Size = new System.Drawing.Size(110, 30);
             this.btnDel1.TabIndex = 17;
             this.btnDel1.Text = "Удалить";
-            this.btnDel1.UseVisualStyleBackColor = true;
+            this.btnDel1.UseVisualStyleBackColor = false;
             this.btnDel1.Click += new System.EventHandler(this.btnDel1_Click);
             // 
             // butbtnDel2
             // 
-            this.butbtnDel2.Location = new System.Drawing.Point(588, 345);
+            this.butbtnDel2.BackColor = System.Drawing.Color.IndianRed;
+            this.butbtnDel2.Location = new System.Drawing.Point(582, 390);
             this.butbtnDel2.Name = "butbtnDel2";
             this.butbtnDel2.Size = new System.Drawing.Size(110, 30);
             this.butbtnDel2.TabIndex = 18;
             this.butbtnDel2.Text = "Удалить";
-            this.butbtnDel2.UseVisualStyleBackColor = true;
+            this.butbtnDel2.UseVisualStyleBackColor = false;
             this.butbtnDel2.Click += new System.EventHandler(this.butbtnDel2_Click);
             // 
             // btnDel5
             // 
-            this.btnDel5.Location = new System.Drawing.Point(1109, 366);
+            this.btnDel5.BackColor = System.Drawing.Color.IndianRed;
+            this.btnDel5.Location = new System.Drawing.Point(1103, 411);
             this.btnDel5.Name = "btnDel5";
             this.btnDel5.Size = new System.Drawing.Size(110, 30);
             this.btnDel5.TabIndex = 19;
             this.btnDel5.Text = "Удалить";
-            this.btnDel5.UseVisualStyleBackColor = true;
+            this.btnDel5.UseVisualStyleBackColor = false;
             this.btnDel5.Click += new System.EventHandler(this.btnDel5_Click);
             // 
             // btnDel4
             // 
-            this.btnDel4.Location = new System.Drawing.Point(588, 728);
+            this.btnDel4.BackColor = System.Drawing.Color.IndianRed;
+            this.btnDel4.Location = new System.Drawing.Point(582, 773);
             this.btnDel4.Name = "btnDel4";
             this.btnDel4.Size = new System.Drawing.Size(110, 30);
             this.btnDel4.TabIndex = 20;
             this.btnDel4.Text = "Удалить";
-            this.btnDel4.UseVisualStyleBackColor = true;
+            this.btnDel4.UseVisualStyleBackColor = false;
             this.btnDel4.Click += new System.EventHandler(this.btnDel4_Click);
             // 
             // btnDel6
             // 
-            this.btnDel6.Location = new System.Drawing.Point(1109, 741);
+            this.btnDel6.BackColor = System.Drawing.Color.IndianRed;
+            this.btnDel6.Location = new System.Drawing.Point(1103, 786);
             this.btnDel6.Name = "btnDel6";
             this.btnDel6.Size = new System.Drawing.Size(110, 30);
             this.btnDel6.TabIndex = 21;
             this.btnDel6.Text = "Удалить";
-            this.btnDel6.UseVisualStyleBackColor = true;
+            this.btnDel6.UseVisualStyleBackColor = false;
             this.btnDel6.Click += new System.EventHandler(this.btnDel6_Click);
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(753, 345);
+            this.button2.BackColor = System.Drawing.Color.MediumAquamarine;
+            this.button2.Location = new System.Drawing.Point(747, 390);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(120, 30);
             this.button2.TabIndex = 23;
             this.button2.Text = "Добавить строку";
-            this.button2.UseVisualStyleBackColor = true;
+            this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(195, 728);
+            this.button3.BackColor = System.Drawing.Color.MediumAquamarine;
+            this.button3.Location = new System.Drawing.Point(189, 773);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(120, 30);
             this.button3.TabIndex = 24;
             this.button3.Text = "Добавить строку";
-            this.button3.UseVisualStyleBackColor = true;
+            this.button3.UseVisualStyleBackColor = false;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(753, 728);
+            this.button4.BackColor = System.Drawing.Color.MediumAquamarine;
+            this.button4.Location = new System.Drawing.Point(747, 773);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(120, 30);
             this.button4.TabIndex = 25;
             this.button4.Text = "Добавить строку";
-            this.button4.UseVisualStyleBackColor = true;
+            this.button4.UseVisualStyleBackColor = false;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(1173, 324);
+            this.button5.BackColor = System.Drawing.Color.MediumAquamarine;
+            this.button5.Location = new System.Drawing.Point(1167, 369);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(120, 30);
             this.button5.TabIndex = 26;
             this.button5.Text = "Добавить строку";
-            this.button5.UseVisualStyleBackColor = true;
+            this.button5.UseVisualStyleBackColor = false;
             this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(1173, 705);
+            this.button6.BackColor = System.Drawing.Color.MediumAquamarine;
+            this.button6.Location = new System.Drawing.Point(1167, 750);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(120, 30);
             this.button6.TabIndex = 27;
             this.button6.Text = "Добавить строку";
-            this.button6.UseVisualStyleBackColor = true;
+            this.button6.UseVisualStyleBackColor = false;
             this.button6.Click += new System.EventHandler(this.button6_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label1.ForeColor = System.Drawing.Color.Brown;
+            this.label1.Location = new System.Drawing.Point(247, 18);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(862, 31);
+            this.label1.TabIndex = 28;
+            this.label1.Text = "Перед удалением элементов проверьте, что их id нигде не указан !";
+            // 
+            // button1
+            // 
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button1.Location = new System.Drawing.Point(1153, 23);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(185, 33);
+            this.button1.TabIndex = 29;
+            this.button1.Text = "Выход";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // Admin_panel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.ClientSize = new System.Drawing.Size(1394, 783);
+            this.ClientSize = new System.Drawing.Size(1394, 827);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.button4);
@@ -326,6 +364,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView6)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -354,5 +393,7 @@
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button button1;
     }
 }
